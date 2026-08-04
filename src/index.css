@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #ffffff;
+    color: #1a1c1e;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Hanken Grotesk', sans-serif;
+  }
+}
+
+.font-display {
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-mono-code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Industrial Grayscale Pattern */
+.bg-industrial-pattern {
+  background-image: radial-gradient(#d8d8da 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Hide scrollbar for carousel */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom smooth animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
