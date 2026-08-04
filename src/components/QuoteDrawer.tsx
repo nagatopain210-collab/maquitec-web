@@ -35,11 +35,6 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
   const [clientComments, setClientComments] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const totalEstimate = items.reduce(
-    (acc, curr) => acc + curr.product.priceEstimate * curr.quantity,
-    0
-  );
-
   const handleSendWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
     if (!clientName || !clientPhone) return;
@@ -47,9 +42,7 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
     let itemsText = items
       .map(
         (i) =>
-          `• ${i.product.name} (REF: ${i.product.ref}) x${i.quantity} [${i.voltage}] - Est. $${(
-            i.product.priceEstimate * i.quantity
-          ).toLocaleString('es-CO')} COP`
+          `• ${i.product.name} (REF: ${i.product.ref}) x${i.quantity} [Voltaje: ${i.voltage}]`
       )
       .join('\n');
 
@@ -57,9 +50,7 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
       itemsText += `\n• ${laserDetailNote}`;
     }
 
-    const message = `*SOLICITUD DE COTIZACIÓN TÉCNICA MAQUITEC*\n\n*Cliente:* ${clientName}\n*Teléfono:* ${clientPhone}\n*Ciudad:* ${clientCity || 'No especificada'}\n\n*Equipos Seleccionados:*\n${itemsText}\n\n*Total Estimado:* $${totalEstimate.toLocaleString(
-      'es-CO'
-    )} COP\n*Comentarios:* ${clientComments || 'Ninguno'}`;
+    const message = `*SOLICITUD DE COTIZACIÓN TÉCNICA MAQUITEC*\n\n*Cliente:* ${clientName}\n*Teléfono:* ${clientPhone}\n*Ciudad:* ${clientCity || 'No especificada'}\n\n*Equipos Seleccionados:*\n${itemsText}\n\n*Comentarios:* ${clientComments || 'Ninguno'}\n\n*Solicitud:* Requiero precio oficial y tiempos de entrega vía WhatsApp.`;
 
     const url = `https://wa.me/573508826094?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
@@ -151,9 +142,9 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                         <p className="font-mono-code text-[11px] text-[#414750]">
                           Voltaje: {item.voltage}
                         </p>
-                        <p className="font-mono-code text-xs font-semibold text-[#00497d]">
-                          ${(item.product.priceEstimate * item.quantity).toLocaleString('es-CO')} COP
-                        </p>
+                        <span className="font-mono-code text-[11px] text-[#0061a4] font-semibold block">
+                          Cotizar precio por WhatsApp
+                        </span>
                       </div>
 
                       <div className="flex flex-col items-end gap-2">
@@ -193,12 +184,12 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                   )}
                 </div>
 
-                {/* Total Summary */}
-                <div className="bg-[#1a1c1e] text-white p-4 rounded font-mono-code space-y-1">
-                  <span className="text-xs text-gray-400 block">TOTAL ESTIMADO REFERENCIAL:</span>
-                  <span className="text-xl font-bold text-white">
-                    ${totalEstimate.toLocaleString('es-CO')} COP
-                  </span>
+                {/* WhatsApp Direct Quote Notice */}
+                <div className="bg-[#eff4ff] border border-[#d3e4fe] p-3.5 rounded font-mono-code space-y-1">
+                  <span className="text-xs text-[#00497d] font-bold block uppercase">COTIZACIÓN DIRECTA VÍA WHATSAPP</span>
+                  <p className="text-[11px] text-[#414750] font-body leading-relaxed">
+                    Al enviar esta solicitud, nuestro equipo comercial calculará los precios finales, descuentos por volumen y costos de envío a su ciudad.
+                  </p>
                 </div>
 
                 {/* Client Contact Form */}

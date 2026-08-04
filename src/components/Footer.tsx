@@ -10,11 +10,15 @@ export const Footer: React.FC = () => {
         
         {/* Brand Column */}
         <div className="md:col-span-2 space-y-4">
-          <img
-            src={logoWhite}
-            alt="Logotipo Maquitec Ingeniería en blanco"
-            className="h-12 w-auto object-contain filter invert brightness-0 mix-blend-screen hover:opacity-80 transition-opacity"
-          />
+          <a href="#" className="inline-block transition-transform duration-300 hover:scale-105">
+            <div className="bg-black px-3.5 py-2 rounded-2xl border-[3.5px] border-white shadow-lg inline-flex items-center justify-center">
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-bNUExvlaqt1oDvsigvtDf8dtvui6UG51vCQUyNK8DqCeBBQ4T-vekT12S5hyUg1LZ6jrUgyZguJ-hYU7WxaoPUiJ2-g4CwHtriPfxhB52hp013uMQ-V2p8yAXqLt62nTPFGFI9HLlSANXgnVlBkIUrv9Xa4e67LPvcqSI29pCuySYR18VshUPR7w_Kv36F2c1LQ3bK-nWA_plnNqddE1NszwiZ47X5heRmu34Wzv1TZLEgKlhbX71xqXTqk6y4kScTA"
+                alt="Logo Maquitec Ingeniería"
+                className="h-10 md:h-12 w-auto object-contain"
+              />
+            </div>
+          </a>
           <p className="font-body text-sm text-[#d8d8da] max-w-md leading-relaxed">
             Soluciones integrales en acero inoxidable para la industria. Diseño, fabricación de maquinaria alimentaria y tecnología de corte láser CNC de vanguardia.
           </p>
@@ -61,33 +65,39 @@ export const Footer: React.FC = () => {
         {/* Contact Column */}
         <div className="space-y-3">
           <h4 className="font-mono-code text-xs text-white uppercase border-b border-[#5d5e60] pb-1 inline-block">
-            Contacto Comercial
+            Ubicaciones & Contacto
           </h4>
-          <ul className="space-y-2.5 font-body text-sm">
+          <ul className="space-y-3 font-body text-sm">
             <li>
               <a
                 href="https://wa.me/573508826094"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#d8d8da] hover:text-white flex items-center gap-2 transition-all"
+                className="text-[#d8d8da] hover:text-[#25D366] flex items-center gap-2 transition-all font-semibold"
               >
-                <Smartphone className="w-4 h-4 text-[#25D366]" />
+                <Smartphone className="w-4 h-4 text-[#25D366] shrink-0" />
                 <span>WhatsApp: +57 350 882 6094</span>
               </a>
             </li>
             <li>
-              <a href="#" className="text-[#d8d8da] hover:text-white flex items-center gap-2 transition-all">
-                <Instagram className="w-4 h-4" />
-                <span>@MaquitecIngenieria</span>
+              <a href="mailto:maquitecingenieria@gmail.com" className="text-[#d8d8da] hover:text-white flex items-center gap-2 transition-all">
+                <Mail className="w-4 h-4 text-[#9fcaff] shrink-0" />
+                <span>maquitecingenieria@gmail.com</span>
               </a>
             </li>
             <li className="flex items-start gap-2 text-[#d8d8da]">
-              <MapPin className="w-4 h-4 shrink-0 mt-0.5" />
-              <span>Zona Industrial Metalmecánica, Colombia</span>
+              <MapPin className="w-4 h-4 shrink-0 mt-1 text-[#9fcaff]" />
+              <div>
+                <strong className="text-white block text-xs font-mono-code">PUNTOS DE ATENCIÓN:</strong>
+                <span className="block text-xs mt-0.5"><strong className="text-white">Maquitec Boutique (Punto de Venta):</strong> Calle 9 # 26-03 Local 1, Bogotá</span>
+                <span className="block text-xs mt-1"><strong className="text-white">Fábrica Principal:</strong> Cr 27 # 7-28, Bogotá</span>
+              </div>
             </li>
-            <li className="flex items-center gap-2 text-[#d8d8da]">
-              <Mail className="w-4 h-4 shrink-0" />
-              <span>contacto@maquitecingenieria.com</span>
+            <li>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-[#d8d8da] hover:text-white flex items-center gap-2 transition-all">
+                <Instagram className="w-4 h-4" />
+                <span>@MaquitecIngenieria</span>
+              </a>
             </li>
           </ul>
         </div>

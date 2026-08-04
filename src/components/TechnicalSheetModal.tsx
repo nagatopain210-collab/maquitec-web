@@ -82,17 +82,25 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
                 {product.fullDesc}
               </p>
 
-              {/* Price Range Estimate */}
-              <div className="bg-[#f8f9ff] border border-[#e5eeff] p-3 rounded">
-                <span className="block font-mono-code text-[11px] text-[#717782] uppercase">
-                  Precio Estimado Referencial
-                </span>
-                <span className="font-display text-xl font-extrabold text-[#1a1c1e]">
-                  ${product.priceEstimate.toLocaleString('es-CO')} COP
-                </span>
-                <span className="block text-[10px] text-[#414750] font-body mt-0.5">
-                  *Sujeto a variación por accesorios y entrega de impuestos de ley.
-                </span>
+              {/* WhatsApp Direct Quote Callout */}
+              <div className="bg-[#eff4ff] border border-[#d3e4fe] p-3.5 rounded flex items-center justify-between gap-3">
+                <div>
+                  <span className="block font-mono-code text-[11px] text-[#00497d] uppercase font-bold">
+                    Precio & Cotización Personalizada
+                  </span>
+                  <span className="font-body text-xs text-[#414750]">
+                    Consulte el precio actualizado y disponibilidad directa vía WhatsApp.
+                  </span>
+                </div>
+                <a
+                  href={`https://wa.me/573508826094?text=${encodeURIComponent(whatsappMessage)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#25D366] text-white font-mono-code text-[11px] px-3 py-2 rounded font-bold uppercase shrink-0 flex items-center gap-1.5 hover:brightness-105 transition-all"
+                >
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  <span>Cotizar</span>
+                </a>
               </div>
 
               {/* Voltage Selector */}

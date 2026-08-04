@@ -7,7 +7,8 @@ export interface Product {
   id: string;
   ref: string;
   name: string;
-  category: 'molinos' | 'wafleras' | 'granizadoras' | 'licuadoras' | 'embutidoras' | 'empacadoras';
+  category: string;
+  group?: 'alimentos' | 'corte_laser' | 'otros';
   categoryLabel: string;
   image: string;
   shortDesc: string;
@@ -18,7 +19,7 @@ export interface Product {
   voltage: string;
   dimensions: string;
   weight: string;
-  priceEstimate: number; // in COP or USD
+  priceEstimate?: number; // Optional reference
   badge?: string;
   specs: TechnicalSpec[];
   highlights: string[];

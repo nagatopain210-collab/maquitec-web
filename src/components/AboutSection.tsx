@@ -28,11 +28,19 @@ export const AboutSection: React.FC = () => {
           <ul className="space-y-5 font-body text-base md:text-lg text-[#414750]">
             <li className="flex items-start gap-3">
               <div className="p-2 bg-[#f3f4f6] rounded text-[#1a1c1e] shrink-0 mt-1">
-                <MapPin className="w-5 h-5" />
+                <MapPin className="w-5 h-5 text-[#0061a4]" />
               </div>
-              <div>
-                <strong className="text-[#1a1c1e] block">Cobertura Nacional Estratégica</strong>
-                <span>Ubicados estratégicamente para servicio técnico y repuestos inmediatos en todo el país.</span>
+              <div className="text-sm md:text-base">
+                <strong className="text-[#1a1c1e] block text-base font-bold">Ubicaciones en Bogotá, Colombia</strong>
+                <span className="block text-[#414750] mt-1">
+                  • <strong>Punto de Venta (Maquitec Boutique):</strong> Calle 9 # 26-03 Local 1, Bogotá.
+                </span>
+                <span className="block text-[#414750] mt-0.5">
+                  • <strong>Planta de Fabricación:</strong> Carrera 27 # 7-28, Bogotá.
+                </span>
+                <span className="block text-[#414750] mt-0.5">
+                  • <strong>Atención al Cliente:</strong> maquitecingenieria@gmail.com | WhatsApp: +57 350 882 6094
+                </span>
               </div>
             </li>
 
@@ -76,11 +84,11 @@ export const AboutSection: React.FC = () => {
             className="w-full h-auto object-cover grayscale group-hover:grayscale-0 group-hover:scale-103 transition-all duration-700"
           />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 text-white">
-            <span className="font-mono-code text-xs font-semibold uppercase block">
-              Planta Metalmecánica Maquitec
+            <span className="font-mono-code text-xs font-semibold uppercase block text-[#9fcaff]">
+              Planta Metalmecánica Maquitec • Cr 27 # 7-28, Bogotá
             </span>
             <span className="font-body text-xs text-gray-300">
-              Procesos automatizados de corte láser, doblado CNC y soldadura especializada.
+              Procesos automatizados de corte láser CNC, doblez industrial y ensamble TIG/MIG en Acero 304.
             </span>
           </div>
         </div>

@@ -1,42 +1,13 @@
-import React, { useState } from 'react';
-import { Cpu, Calculator, Shield, ArrowUpRight, Check, Sparkles } from 'lucide-react';
+import React from 'react';
+import { Cpu, Shield, ArrowUpRight, MessageSquare } from 'lucide-react';
 
 interface LaserCuttingSectionProps {
   onOpenLaserQuote: (materialDetails: string) => void;
 }
 
 export const LaserCuttingSection: React.FC<LaserCuttingSectionProps> = ({ onOpenLaserQuote }) => {
-  // Laser Estimator State
-  const [material, setMaterial] = useState<'acero_304' | 'acero_carbono' | 'aluminio'>('acero_304');
-  const [thicknessMm, setThicknessMm] = useState<number>(3);
-  const [widthMm, setWidthMm] = useState<number>(1000);
-  const [lengthMm, setLengthMm] = useState<number>(2000);
-  const [quantity, setQuantity] = useState<number>(1);
-
-  // Density in g/cm³
-  const densities = {
-    acero_304: 7.93,
-    acero_carbono: 7.85,
-    aluminio: 2.7
-  };
-
-  // Base price COP per kg of cut processing
-  const baseCutRatePerKg = {
-    acero_304: 18500,
-    acero_carbono: 12500,
-    aluminio: 22000
-  };
-
-  // Calculations:
-  // Volume in cm³ = (widthMm / 10) * (lengthMm / 10) * (thicknessMm / 10)
-  const volumeCm3 = (widthMm / 10) * (lengthMm / 10) * (thicknessMm / 10);
-  const weightKgPerPiece = (volumeCm3 * densities[material]) / 1000;
-  const totalWeightKg = weightKgPerPiece * quantity;
-  const estimatedCostCop = Math.round(totalWeightKg * baseCutRatePerKg[material]);
-
   const handleQuoteClick = () => {
-    const matLabel = material === 'acero_304' ? 'Acero Inox 304' : material === 'acero_carbono' ? 'Acero al Carbono' : 'Aluminio Industrial';
-    const detailString = `Proyecto Láser CNC: ${quantity} pieza(s) en ${matLabel} de ${thicknessMm}mm (${widthMm}x${lengthMm}mm). Peso aprox: ${totalWeightKg.toFixed(2)}kg. Est. $${estimatedCostCop.toLocaleString('es-CO')} COP`;
+    const detailString = `Consulta por Servicio de Corte Láser Especializado (Planos DXF / DWG o Prototipado en Acero 304)`;
     onOpenLaserQuote(detailString);
   };
 
@@ -81,12 +52,22 @@ export const LaserCuttingSection: React.FC<LaserCuttingSectionProps> = ({ onOpen
               </div>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-4 flex flex-wrap gap-3">
+              <a
+                href={`https://wa.me/573508826094?text=${encodeURIComponent("Hola Maquitec, deseo cotizar un proyecto de corte láser CNC. Adjunto información de lámina/planos.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-[#25D366] text-white font-mono-code text-xs px-6 py-3.5 rounded hover:brightness-105 transition-all cursor-pointer uppercase font-bold shadow-md"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span>Cotizar Servicio por WhatsApp</span>
+              </a>
+
               <button
                 onClick={handleQuoteClick}
-                className="inline-flex items-center gap-2 border border-white text-white font-mono-code text-xs px-6 py-3 rounded hover:bg-white hover:text-[#1a1c1e] transition-all cursor-pointer uppercase font-bold"
+                className="inline-flex items-center gap-2 border border-white text-white font-mono-code text-xs px-5 py-3.5 rounded hover:bg-white hover:text-[#1a1c1e] transition-all cursor-pointer uppercase font-bold"
               >
-                <span>Cotizar Proyecto Láser</span>
+                <span>Solicitar Asesoría Técnica</span>
                 <ArrowUpRight className="w-4 h-4" />
               </button>
             </div>
@@ -133,138 +114,6 @@ export const LaserCuttingSection: React.FC<LaserCuttingSectionProps> = ({ onOpen
               </h5>
             </div>
 
-          </div>
-
-        </div>
-
-        {/* Interactive Estimator Calculator */}
-        <div className="bg-[#213145] border border-[#5d5e60] rounded-lg p-6 md:p-8 space-y-6">
-          <div className="flex items-center justify-between border-b border-[#5d5e60] pb-4 flex-wrap gap-2">
-            <div className="flex items-center gap-2">
-              <Calculator className="w-5 h-5 text-[#9fcaff]" />
-              <h3 className="font-display text-lg font-bold text-white">
-                Calculadora & Estimador de Corte Láser
-              </h3>
-            </div>
-            <span className="font-mono-code text-xs text-[#9fcaff] bg-[#00497d] px-2.5 py-1 rounded">
-              Cálculo de Masa & Costo Aprox
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            
-            {/* Material */}
-            <div>
-              <label className="block font-mono-code text-[11px] text-[#d8d8da] mb-1.5 uppercase">
-                Material
-              </label>
-              <select
-                value={material}
-                onChange={(e) => setMaterial(e.target.value as any)}
-                className="w-full bg-[#1a1c1e] text-white border border-[#717782] rounded px-3 py-2 text-xs font-mono-code focus:outline-none focus:border-[#9fcaff]"
-              >
-                <option value="acero_304">Acero Inox 304</option>
-                <option value="acero_carbono">Acero al Carbono (HR/CR)</option>
-                <option value="aluminio">Aluminio Industrial</option>
-              </select>
-            </div>
-
-            {/* Thickness */}
-            <div>
-              <label className="block font-mono-code text-[11px] text-[#d8d8da] mb-1.5 uppercase">
-                Espesor ({thicknessMm} mm)
-              </label>
-              <input
-                type="range"
-                min="1"
-                max="16"
-                step="0.5"
-                value={thicknessMm}
-                onChange={(e) => setThicknessMm(parseFloat(e.target.value))}
-                className="w-full cursor-pointer accent-[#9fcaff] mt-2"
-              />
-            </div>
-
-            {/* Width */}
-            <div>
-              <label className="block font-mono-code text-[11px] text-[#d8d8da] mb-1.5 uppercase">
-                Ancho (mm)
-              </label>
-              <input
-                type="number"
-                min="100"
-                max="3000"
-                step="50"
-                value={widthMm}
-                onChange={(e) => setWidthMm(parseInt(e.target.value) || 100)}
-                className="w-full bg-[#1a1c1e] text-white border border-[#717782] rounded px-3 py-2 text-xs font-mono-code"
-              />
-            </div>
-
-            {/* Length */}
-            <div>
-              <label className="block font-mono-code text-[11px] text-[#d8d8da] mb-1.5 uppercase">
-                Largo (mm)
-              </label>
-              <input
-                type="number"
-                min="100"
-                max="6000"
-                step="50"
-                value={lengthMm}
-                onChange={(e) => setLengthMm(parseInt(e.target.value) || 100)}
-                className="w-full bg-[#1a1c1e] text-white border border-[#717782] rounded px-3 py-2 text-xs font-mono-code"
-              />
-            </div>
-
-            {/* Quantity */}
-            <div>
-              <label className="block font-mono-code text-[11px] text-[#d8d8da] mb-1.5 uppercase">
-                Cantidad
-              </label>
-              <input
-                type="number"
-                min="1"
-                max="1000"
-                value={quantity}
-                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                className="w-full bg-[#1a1c1e] text-white border border-[#717782] rounded px-3 py-2 text-xs font-mono-code"
-              />
-            </div>
-
-          </div>
-
-          {/* Results Summary Box */}
-          <div className="bg-[#1a1c1e] p-4 rounded border border-[#5d5e60] flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex gap-6 text-xs font-mono-code">
-              <div>
-                <span className="text-[#717782] block">PESO UNITARIO:</span>
-                <span className="text-white font-bold">{weightKgPerPiece.toFixed(2)} kg</span>
-              </div>
-              <div>
-                <span className="text-[#717782] block">PESO TOTAL:</span>
-                <span className="text-white font-bold">{totalWeightKg.toFixed(2)} kg</span>
-              </div>
-              <div>
-                <span className="text-[#717782] block">TOLERANCIA CNC:</span>
-                <span className="text-[#9fcaff] font-bold">±0.1 mm</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-              <div>
-                <span className="text-[10px] text-[#717782] font-mono-code block">ESTIMACIÓN CORTE LÁSER:</span>
-                <span className="font-display text-xl font-extrabold text-[#9fcaff]">
-                  ${estimatedCostCop.toLocaleString('es-CO')} COP
-                </span>
-              </div>
-              <button
-                onClick={handleQuoteClick}
-                className="bg-[#0061a4] hover:bg-[#00497d] text-white font-mono-code text-xs px-4 py-2.5 rounded font-bold uppercase cursor-pointer"
-              >
-                Enviar a Cotización
-              </button>
-            </div>
           </div>
 
         </div>

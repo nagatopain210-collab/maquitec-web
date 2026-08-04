@@ -146,7 +146,7 @@ export const Hero: React.FC<HeroProps> = ({ onQuickQuoteSubmit }) => {
                   className="w-full bg-[#f3f4f6] border border-[#c1c7d2] rounded px-3 py-2.5 font-body text-sm focus:outline-none focus:border-[#1a1c1e] focus:ring-1 focus:ring-[#1a1c1e] transition-all cursor-pointer"
                 >
                   <option value="Molino de Carne TK-12">Molino de Carne TK-12</option>
-                  <option value="Waflera Industrial Pro">Waflera Industrial Pro</option>
+                  <option value="Desmechadora de Carne o Pollo Eléctrica">Desmechadora de Carne o Pollo Eléctrica</option>
                   <option value="Granizadora Doble Tanque 24L">Granizadora Doble Tanque 24L</option>
                   <option value="Licuadora Industrial Alta Capacidad 4L">Licuadora Industrial Alta Capacidad 4L</option>
                   <option value="Embutidora Hidráulica 15L">Embutidora Hidráulica 15L</option>

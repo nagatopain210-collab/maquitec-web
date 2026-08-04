@@ -6,6 +6,7 @@ import { Hero } from './components/Hero';
 import { CatalogSection } from './components/CatalogSection';
 import { TechnicalSheetModal } from './components/TechnicalSheetModal';
 import { AboutSection } from './components/AboutSection';
+import { LocationsMapSection } from './components/LocationsMapSection';
 import { LaserCuttingSection } from './components/LaserCuttingSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { SuccessCasesSection } from './components/SuccessCasesSection';
@@ -13,6 +14,7 @@ import { AiEquipmentAdvisorModal } from './components/AiEquipmentAdvisorModal';
 import { QuoteDrawer, CartItem } from './components/QuoteDrawer';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { LeadChatbotWidget } from './components/LeadChatbotWidget';
 
 export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -107,6 +109,9 @@ export default function App() {
         {/* Engineering & Factory Information */}
         <AboutSection />
 
+        {/* Interactive Bogotá Locations Map */}
+        <LocationsMapSection />
+
         {/* Client Endorsement & Testimonials */}
         <TestimonialsSection />
 
@@ -117,7 +122,8 @@ export default function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Floating Action Button */}
+      {/* Floating Action Buttons */}
+      <LeadChatbotWidget />
       <WhatsAppButton />
 
       {/* Modals & Drawers */}
