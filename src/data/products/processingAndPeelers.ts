@@ -5,178 +5,256 @@ export const processingAndPeelersProducts: Product[] = [
   {
     id: 'rallador-queso-coco',
     ref: 'RL-QCIND',
-    name: 'Rallador de Queso y Coco Eléctrico Industrial',
+    name: 'Rallador Eléctrico Industrial de Queso y Coco',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Rallado continuo de queso costeño, mozzarella, pan y coco a gran velocidad.',
-    fullDesc: 'Rallador eléctrico industrial con disco cilíndrico en acero inoxidable 304 microperforado. Ideal para panaderías, pizzeros y procesadores de alimentos.',
+    shortDesc: 'Rallador industrial eléctrico para queso, coco, pan seco y vegetales.',
+    fullDesc: 'Rallador eléctrico industrial diseñado para el procesamiento continuo de queso, coco, pan seco, vegetales y productos similares. Fabricado en acero inoxidable de grado alimenticio, garantiza máxima higiene y durabilidad en entornos de producción exigentes. Equipado con un potente motor industrial y cuchillas de alta precisión que aseguran un rallado uniforme y rápido.',
     power: '1.0 HP / 750W',
     capacity: '100 - 150 kg/h',
-    material: 'Acero Inoxidable 304',
+    material: 'Acero Inoxidable de Grado Alimenticio',
     voltage: '110V - 60Hz',
     dimensions: '420 x 280 x 480 mm',
     weight: '22 kg',
     badge: 'ALTO RENDIMIENTO',
-    specs: [{ label: 'Rallado', value: 'Queso duro/blando, coco, pan seco y yuca' }],
-    highlights: ['Boca de alimentación segura con mazo empujador', 'Disco removible en 10 segundos']
+    specs: [
+      { label: 'Aplicaciones', value: 'Queso costeño, mozzarella, coco, pan seco, vegetales y yuca' },
+      { label: 'Estructura', value: 'Fabricado en acero inoxidable de grado alimenticio' },
+      { label: 'Motor', value: 'Motor industrial de alta durabilidad para trabajo continuo' },
+      { label: 'Diseño', value: 'Diseño compacto, estable e higiénico de fácil desinfección' }
+    ],
+    highlights: [
+      'Cuerpo y cuchillas en acero inoxidable de grado alimenticio',
+      'Apto para queso costeño, mozzarella, coco, pan seco y verduras',
+      'Diseño compacto de mesa e higiénico de fácil desinfección',
+      'Motor industrial de alta velocidad para producción continua'
+    ]
   },
   {
     id: 'procesador-vegetales',
     ref: 'PR-VEG5',
-    name: 'Procesador de Vegetales Industrial con Discos Intercambiables',
+    name: 'Máquina Multipropósitos Cortadora de Verduras',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Corta, tajada, rallado y cubicado continuo de verduras y hortalizas.',
-    fullDesc: 'Procesador comercial de vegetales con doble boca de entrada. Incluye kit de discos de corte para julianas, rodajas, rallas y cubos.',
+    shortDesc: 'Cortadora y procesadora de verduras industrial con kit de discos intercambiables.',
+    fullDesc: 'Máquina multipropósitos cortadora de verduras industrial diseñada para rallar, tajadear, julianear y cubicar hortalizas, verduras y quesos. Fabricada en aleación de aluminio anodizado y acero inoxidable 304. Cuenta con doble boca de alimentación y sensores electromagnéticos de seguridad.',
     power: '0.75 HP / 550W',
     capacity: '150 - 300 kg/h',
-    material: 'Aleación de Aluminio Anodizado y Acero 304',
+    material: 'Aleación de Aluminio Anodizado y Acero Inoxidable 304',
     voltage: '110V - 60Hz',
     dimensions: '500 x 280 x 540 mm',
     weight: '24 kg',
     badge: 'MULTIUSO',
-    specs: [{ label: 'Discos Incluidos', value: 'Set de 5 discos de corte' }],
-    highlights: ['Doble sensor de seguridad electromagnético', 'Corte perfecto sin aplastar los alimentos']
+    specs: [
+      { label: 'Capacidad Producción', value: '150 a 300 kg/hora' },
+      { label: 'Discos Incluidos', value: 'Kit de discos de corte intercambiables' },
+      { label: 'Alimentación', value: 'Doble boca (empujador tubular y boca ancha)' },
+      { label: 'Seguridad', value: 'Micros de seguridad en tapa y palanca' }
+    ],
+    highlights: [
+      'Corta, taja, ralla y cubica todo tipo de vegetales y quesos',
+      'Producción de 150 a 300 kg/h',
+      'Estructura en aluminio anodizado y acero 304',
+      'Doble sistema de seguridad electromagnético'
+    ]
   },
   {
     id: 'disco-cubicar',
     ref: 'DSC-CUB',
-    name: 'Disco para Cubicar (Cortes en Cubos)',
+    name: 'Disco para Cubicar de Procesador (10 mm)',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Disco especial en acero inox para procesador de vegetales para picar en cubos.',
-    fullDesc: 'Accesorio compatible con procesadores de vegetales Maquitec para cortes de 8x8mm, 10x10mm o 12x12mm.',
+    shortDesc: 'Disco especial en acero inoxidable de 10 mm para cortes en cubos (dicing).',
+    fullDesc: 'Disco accesorio intercambiable en acero inoxidable 304 para procesador de verduras. Diseñado para realizar cortes precisos en cubos de 10 mm x 10 mm en papas, zanahorias, cebollas y verduras firmes.',
     power: 'N/A (Accesorio)',
-    capacity: 'Medidas 8mm, 10mm, 12mm',
-    material: 'Acero Inoxidable 304 y Cuchillas Templadas',
+    capacity: 'Corte en cubos de 10 mm x 10 mm',
+    material: 'Acero Inoxidable 304 y Hojas Quirúrgicas Templadas',
     voltage: 'N/A',
     dimensions: 'Diámetro 205 mm',
     weight: '1.2 kg',
-    specs: [{ label: 'Compatibilidad', value: 'Procesadores serie PR-VEG Maquitec' }],
-    highlights: ['Hojas de bisturí de alta durabilidad', 'Lavable en lavavajillas']
+    specs: [
+      { label: 'Tamaño de Cubo', value: '10 mm x 10 mm' },
+      { label: 'Compatibilidad', value: 'Procesadores de vegetales industriales Maquitec' },
+      { label: 'Cuchillas', value: 'Hojas en acero inoxidable de alto filamento' }
+    ],
+    highlights: [
+      'Corte perfecto en cubos de 10 mm de espesor',
+      'Fabricado 100% en acero inoxidable 304',
+      'Fácil instalación y limpieza'
+    ]
   },
   {
     id: 'disco-rallador-3mm',
     ref: 'DSC-RL3',
-    name: 'Disco Rallador 3 mm',
+    name: 'Disco para Rallar 3 mm',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Disco rallador de 3 mm para zanahoria, queso fino y verduras.',
-    fullDesc: 'Disco en acero inoxidable con perforaciones de 3 mm para ralle fino.',
+    shortDesc: 'Disco rallador de 3 mm en acero inoxidable para procesador de vegetales.',
+    fullDesc: 'Disco rallador fino de 3 mm para procesador de verduras y alimentos. Ideal para rallado fino de zanahoria, queso duro, remolacha y repollo.',
     power: 'N/A',
-    capacity: 'Ralle Fino 3mm',
+    capacity: 'Rallado Fino 3 mm',
     material: 'Acero Inoxidable 304',
     voltage: 'N/A',
     dimensions: 'Diámetro 205 mm',
     weight: '0.9 kg',
-    specs: [{ label: 'Calibre', value: '3 mm' }],
-    highlights: ['Microfilo quirúrgico', 'Cero desgaste de óxido']
+    specs: [
+      { label: 'Calibre de Rallado', value: '3 mm (Fino)' },
+      { label: 'Material', value: 'Acero inoxidable 304 grado alimenticio' }
+    ],
+    highlights: [
+      'Rallado uniforme de 3 mm',
+      'Cuchillas de microperforación quirúrgica'
+    ]
   },
   {
     id: 'disco-rallador-4mm',
     ref: 'DSC-RL4',
-    name: 'Disco Rallador 4 mm',
+    name: 'Disco para Rallar 4 mm',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Disco rallador de 4 mm para queso mozzarella y ensaladas.',
-    fullDesc: 'Ralle estándar de 4mm ideal para queso de pizza y vegetales.',
+    shortDesc: 'Disco rallador de 4 mm en acero inoxidable para procesador de verduras.',
+    fullDesc: 'Disco rallador mediano de 4 mm para procesador de hortalizas. Ideal para queso mozzarella de pizza, verduras y ensaladas.',
     power: 'N/A',
-    capacity: 'Ralle Medio 4mm',
+    capacity: 'Rallado Mediano 4 mm',
     material: 'Acero Inoxidable 304',
     voltage: 'N/A',
     dimensions: 'Diámetro 205 mm',
     weight: '0.9 kg',
-    specs: [{ label: 'Calibre', value: '4 mm' }],
-    highlights: ['Corte limpio sin desmoronar']
+    specs: [
+      { label: 'Calibre de Rallado', value: '4 mm (Mediano)' },
+      { label: 'Material', value: 'Acero inoxidable 304' }
+    ],
+    highlights: [
+      'Rallado mediano perfecto para queso de pizza',
+      'Corte limpio sin desmoronar los alimentos'
+    ]
   },
   {
     id: 'disco-rallador-7mm',
     ref: 'DSC-RL7',
-    name: 'Disco Rallador 7 mm',
+    name: 'Disco para Rallar 7 mm',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Disco rallador de 7 mm para hebras gruesas.',
-    fullDesc: 'Disco de ralle grueso de 7 mm para papas, vegetales de cocción y quesos suaves.',
+    shortDesc: 'Disco rallador grueso de 7 mm en acero inoxidable para procesador.',
+    fullDesc: 'Disco rallador de hebra gruesa de 7 mm para papas, vegetales de salteado y quesos suaves.',
     power: 'N/A',
-    capacity: 'Ralle Grueso 7mm',
+    capacity: 'Rallado Grueso 7 mm',
     material: 'Acero Inoxidable 304',
     voltage: 'N/A',
     dimensions: 'Diámetro 205 mm',
     weight: '0.9 kg',
-    specs: [{ label: 'Calibre', value: '7 mm' }],
-    highlights: ['Ideal para tiras de papa hashbrown y vegetales']
+    specs: [
+      { label: 'Calibre de Rallado', value: '7 mm (Grueso)' },
+      { label: 'Material', value: 'Acero inoxidable 304' }
+    ],
+    highlights: [
+      'Rallado en hebras gruesas de 7 mm',
+      'Ideal para papas hashbrown y tiras gruesas'
+    ]
   },
 
   // Exprimidores
   {
     id: 'exprimidor-auto',
     ref: 'EXP-AUT',
-    name: 'Exprimidor Industrial Automático de Naranjas',
+    name: 'Exprimidor de Naranjas Industrial Automático',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Extracción automática de cítricos por compresión con alimentador de rampas.',
-    fullDesc: 'Exprimidor automático que corta y prensa naranjas en segundos sin aplastar la cáscara amarga. Rampa de carga de hasta 10 kg de naranjas.',
-    power: '250W',
-    capacity: '20 - 25 naranjas por minuto',
-    material: 'Cuerpo Acero 304 / Copas de Polímero Alimenticio',
+    shortDesc: 'Exprimidor de cítricos automático con capacidad para 20 a 25 naranjas por minuto.',
+    fullDesc: 'Exprimidor industrial automático diseñado para procesar naranjas y cítricos de forma rápida y continua. Equipado con un alimentador superior de gran capacidad y un mecanismo de corte y prensado que extrae el jugo fresco evitando exprimir la cáscara para no aportar amargor. Fabricado en acero inoxidable de alta calidad y policarbonato de grado alimenticio.',
+    power: 'Eléctrica (110V / 60 Hz)',
+    capacity: '20 a 25 naranjas por minuto',
+    material: 'Acero Inoxidable de Alta Calidad y Policarbonato Alimenticio',
     voltage: '110V - 60Hz',
-    dimensions: '400 x 300 x 780 mm',
-    weight: '43 kg',
+    dimensions: '40 cm (ancho) × 30 cm (fondo) × 78 cm (alto)',
+    weight: '45 kg',
     badge: 'AUTOMÁTICO',
-    specs: [{ label: 'Rendimiento', value: '20 a 25 frutas por minuto' }],
-    highlights: ['Zumo 100% puro sin amargor de cáscara', 'Filtro recolector de semillas']
+    specs: [
+      { label: 'Rendimiento', value: '20 a 25 naranjas por minuto' },
+      { label: 'Dimensiones', value: '40 cm (ancho) × 30 cm (fondo) × 78 cm (alto)' },
+      { label: 'Peso Neto', value: '45 Kilogramos' },
+      { label: 'Construcción', value: 'Acero inoxidable de alta calidad y policarbonato grado alimenticio' },
+      { label: 'Mantenimiento', value: 'Piezas desmontables de fácil limpieza' },
+      { label: 'Alimentación Eléctrica', value: '110 V / 60 Hz' }
+    ],
+    highlights: [
+      'Extrae de 20 a 25 naranjas por minuto de forma automatizada',
+      'Corte y prensado sin exprimir la cáscara amarga',
+      'Componentes desmontables para higiene y limpieza rápida',
+      'Estructura en acero inoxidable y policarbonato industrial'
+    ]
   },
   {
     id: 'exprimidor-inox-palanca',
     ref: 'EXP-INOX',
-    name: 'Exprimidor Industrial en Acero Inoxidable con Palanca',
+    name: 'Exprimidor Industrial de Cítricos en Acero (48 kg/hora)',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Exprimidor motorizado heavy duty con palanca de presión en acero inox 304.',
-    fullDesc: 'Extractor de cítricos comercial con piña y copa en acero 304. Activación automática al presionar la palanca.',
-    power: '350W',
-    capacity: '80 - 100 vasos/hora',
+    shortDesc: 'Exprimidor de cítricos en acero inoxidable con rendimiento de hasta 48 kg de fruta por hora.',
+    fullDesc: 'Exprimidor industrial de cítricos en acero inoxidable diseñado para uso continuo comercial. Capaz de procesar hasta 48 kg de fruta por hora. Equipado con piña en acero inoxidable 304, palanca de empuje asistido y filtro recolector de semillas.',
+    power: 'Eléctrica 110V',
+    capacity: 'Hasta 48 kg de fruta por hora',
     material: 'Acero Inoxidable 304 Quirúrgico',
     voltage: '110V - 60Hz',
     dimensions: '220 x 310 x 460 mm',
     weight: '10.5 kg',
-    specs: [{ label: 'Copa y Piña', value: 'Acero Inox 304 removible' }],
-    highlights: ['Motor con rodamiento continuo silencioso', 'Anti-goteo direccional']
+    specs: [
+      { label: 'Rendimiento Extracción', value: 'Hasta 48 kg de fruta por hora' },
+      { label: 'Material Piña y Rejilla', value: 'Acero inoxidable 304 quirúrgico' },
+      { label: 'Accionamiento', value: 'Palanca de presión o empuje asistido' },
+      { label: 'Alimentación Eléctrica', value: '110 V / 60 Hz' }
+    ],
+    highlights: [
+      'Rendimiento de extracción de hasta 48 kg por hora',
+      'Cuerpo y piña en acero inoxidable 304 de fácil lavado',
+      'Sistema de accionamiento por palanca ergonómica',
+      'Motor de trabajo pesado para juguerías y cafeterías'
+    ]
   },
   {
     id: 'exprimidor-industrial-std',
     ref: 'EXP-STD',
-    name: 'Exprimidor Industrial Estándar de Cítricos',
+    name: 'Exprimidor Industrial Profesional 180W (32-34 L/h) Plateado',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: 'https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&q=80&w=800',
-    shortDesc: 'Exprimidor giratorio continuo de mesa para naranjas, limones y mandarinas.',
-    fullDesc: 'Incluye 2 piñas de diferente tamaño (para limón y para naranja). Base estable fundida anticorrosiva.',
-    power: '250W',
-    capacity: '60 vasos/hora',
-    material: 'Cuerpo Fundido / Componentes Inox',
+    shortDesc: 'Exprimidor profesional de 180W con capacidad de 32 a 34 litros por hora.',
+    fullDesc: 'Exprimidor industrial profesional de 180W de potencia en acabado plateado. Diseñado para procesar cítricos a gran velocidad con un rendimiento constante de 32 a 34 Litros de jugo fresco por hora. Incluye piñas intercambiables para limones, naranjas y toronjas.',
+    power: '180 Watts',
+    capacity: '32 - 34 Litros por hora',
+    material: 'Cuerpo Metálico Plateado y Componentes en Acero Inoxidable',
     voltage: '110V - 60Hz',
     dimensions: '200 x 280 x 390 mm',
     weight: '7.2 kg',
-    specs: [{ label: 'Accesorios', value: '2 Conos (Limón y Naranja/Toronja)' }],
-    highlights: ['Fácil operación de toque rápido', 'Protección térmica de motor']
+    specs: [
+      { label: 'Potencia Motor', value: '180 Watts de alto torque' },
+      { label: 'Capacidad de Extracción', value: '32 a 34 Litros por hora' },
+      { label: 'Acabado y Color', value: 'Plateado comercial anticorrosivo' },
+      { label: 'Piñas Incluidas', value: 'Conos para cítricos pequeños y grandes' }
+    ],
+    highlights: [
+      'Motor de 180W con caudal de 32 a 34 Litros por hora',
+      'Estructura metálica robusta en acabado plateado',
+      'Incluye piñas intercambiables para limón, naranja y toronja',
+      'Diseño compacto de fácil operación'
+    ]
   },
 
   // Peladoras de Papa

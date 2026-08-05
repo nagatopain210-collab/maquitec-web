@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Product } from '../types';
 import { 
   ArrowLeft, 
@@ -18,7 +18,9 @@ import {
   Grid,
   List,
   Filter,
-  RotateCcw
+  RotateCcw,
+  Play,
+  Pause
 } from 'lucide-react';
 
 interface CatalogSectionProps {
@@ -37,10 +39,31 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
   const [selectedGroup, setSelectedGroup] = useState<'todos' | 'alimentos' | 'corte_laser' | 'otros'>('todos');
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [showAllSubcategoriesGrid, setShowAllSubcategoriesGrid] = useState<boolean>(false);
+  const [displayMode, setDisplayMode] = useState<'carousel' | 'grid'>('carousel');
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   
   const carouselRef = useRef<HTMLDivElement>(null);
   const subcategoriesRef = useRef<HTMLDivElement>(null);
+
+  // Automatic animated carousel scroll effect
+  useEffect(() => {
+    if (displayMode !== 'carousel' || !isAutoPlaying || isHovered) return;
+
+    const interval = setInterval(() => {
+      if (carouselRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+        // Reset to beginning if near end
+        if (scrollLeft + clientWidth >= scrollWidth - 40) {
+          carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          carouselRef.current.scrollBy({ left: 360, behavior: 'smooth' });
+        }
+      }
+    }, 3200);
+
+    return () => clearInterval(interval);
+  }, [displayMode, isAutoPlaying, isHovered, products.length]);
 
   const mainGroups = [
     { 
@@ -305,121 +328,32 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
                 <span className="text-xs font-mono-code uppercase tracking-wider text-[#717d93] font-bold flex items-center gap-2">
                   <span>2. Subcategorías disponibles ({availableCategories.length - 1}):</span>
                 </span>
-
-                <div className="flex items-center gap-2">
-                  {/* Toggle Grid View vs Scroll View */}
-                  <button
-                    onClick={() => setShowAllSubcategoriesGrid(!showAllSubcategoriesGrid)}
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono-code text-[#9fcaff] bg-[#1a2332] hover:bg-[#253247] border border-[#2a374c] transition-all cursor-pointer"
-                    title={showAllSubcategoriesGrid ? "Ver en línea desplazable" : "Ver todas las subcategorías en rejilla"}
-                  >
-                    {showAllSubcategoriesGrid ? (
-                      <>
-                        <List className="w-3.5 h-3.5" />
-                        <span>Modo Barra</span>
-                      </>
-                    ) : (
-                      <>
-                        <Grid className="w-3.5 h-3.5" />
-                        <span>Ver Todas ({availableCategories.length})</span>
-                      </>
-                    )}
-                  </button>
-
-                  {/* Scroll Left/Right arrows for line mode */}
-                  {!showAllSubcategoriesGrid && (
-                    <div className="hidden sm:flex items-center gap-1">
-                      <button
-                        onClick={() => scrollSubcategories('left')}
-                        className="w-7 h-7 rounded-lg bg-[#1a2332] hover:bg-[#253247] border border-[#2a374c] flex items-center justify-center text-[#9fcaff] hover:text-white transition-all cursor-pointer"
-                        title="Desplazar a la izquierda"
-                      >
-                        <ChevronLeft className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => scrollSubcategories('right')}
-                        className="w-7 h-7 rounded-lg bg-[#1a2332] hover:bg-[#253247] border border-[#2a374c] flex items-center justify-center text-[#9fcaff] hover:text-white transition-all cursor-pointer"
-                        title="Desplazar a la derecha"
-                      >
-                        <ChevronRight className="w-4 h-4" />
-                      </button>
-                    </div>
-                  )}
-                </div>
               </div>
 
-              {/* Grid Mode */}
-              {showAllSubcategoriesGrid ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 p-1 animate-fade-in">
-                  {availableCategories.map((cat) => {
-                    const isCatActive = selectedCategory === cat.id;
-                    return (
-                      <button
-                        key={cat.id}
-                        onClick={() => setSelectedCategory(cat.id)}
-                        className={`px-3 py-2.5 rounded-xl text-xs font-mono-code font-medium text-left flex items-center justify-between gap-2 transition-all cursor-pointer ${
-                          isCatActive
-                            ? 'bg-[#9fcaff] text-[#0d1117] font-bold shadow-md ring-2 ring-[#9fcaff]/40'
-                            : 'bg-[#18202d] text-[#b0bacb] hover:bg-[#253247] hover:text-white border border-[#263346]'
-                        }`}
-                      >
-                        <span className="truncate">{cat.label}</span>
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full shrink-0 font-bold ${
-                          isCatActive ? 'bg-[#0d1117] text-white' : 'bg-[#121824] text-[#717d93]'
-                        }`}>
-                          {cat.count}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : (
-                /* Horizontal Scroll Mode */
-                <div className="relative group/subnav">
-                  {/* Left Scroll Button on mobile/tablet */}
-                  <button
-                    onClick={() => scrollSubcategories('left')}
-                    className="sm:hidden absolute left-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-[#0d1117]/90 text-[#9fcaff] border border-[#2c384c] flex items-center justify-center shadow-lg"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-
-                  <div
-                    ref={subcategoriesRef}
-                    className="flex gap-2.5 overflow-x-auto hide-scrollbar py-1 px-0.5 scroll-smooth"
-                  >
-                    {availableCategories.map((cat) => {
-                      const isCatActive = selectedCategory === cat.id;
-                      return (
-                        <button
-                          key={cat.id}
-                          onClick={() => setSelectedCategory(cat.id)}
-                          className={`px-4 py-2 rounded-xl text-xs md:text-sm font-mono-code whitespace-nowrap transition-all cursor-pointer shrink-0 flex items-center gap-2 ${
-                            isCatActive
-                              ? 'bg-[#9fcaff] text-[#0d1117] font-bold shadow-lg ring-2 ring-[#9fcaff]/30 scale-[1.02]'
-                              : 'bg-[#18202d] text-[#b0bacb] hover:bg-[#253247] hover:text-white border border-[#263346]'
-                          }`}
-                        >
-                          <span>{cat.label}</span>
-                          <span className={`text-[11px] px-2 py-0.2 rounded-full font-bold ${
-                            isCatActive ? 'bg-[#00497d] text-white' : 'bg-[#121824] text-[#717d93]'
-                          }`}>
-                            {cat.count}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {/* Right Scroll Button on mobile/tablet */}
-                  <button
-                    onClick={() => scrollSubcategories('right')}
-                    className="sm:hidden absolute right-0 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-[#0d1117]/90 text-[#9fcaff] border border-[#2c384c] flex items-center justify-center shadow-lg"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                </div>
-              )}
+              {/* Grid Layout - Static "Ver Todas" mode displaying all subcategories */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 p-1">
+                {availableCategories.map((cat) => {
+                  const isCatActive = selectedCategory === cat.id;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`px-3 py-2.5 rounded-xl text-xs font-mono-code font-medium text-left flex items-center justify-between gap-2 transition-all cursor-pointer ${
+                        isCatActive
+                          ? 'bg-[#9fcaff] text-[#0d1117] font-bold shadow-md ring-2 ring-[#9fcaff]/40'
+                          : 'bg-[#18202d] text-[#b0bacb] hover:bg-[#253247] hover:text-white border border-[#263346]'
+                      }`}
+                    >
+                      <span className="truncate">{cat.label}</span>
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full shrink-0 font-bold ${
+                        isCatActive ? 'bg-[#00497d] text-white' : 'bg-[#121824] text-[#717d93]'
+                      }`}>
+                        {cat.count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <div className="text-xs font-mono-code text-[#9fcaff] flex items-center gap-2 bg-[#18202d] p-3 rounded-xl border border-[#263346]">
@@ -479,6 +413,74 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
         {/* =========================================================================
             CATALOG PRODUCT CAROUSEL / GRID
            ========================================================================= */}
+        {/* View Mode Switcher & Item Counter Header */}
+        {filteredProducts.length > 0 && (
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 bg-[#131924] p-3.5 rounded-xl border border-[#222c3c]">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse"></span>
+              <span className="text-xs md:text-sm font-mono-code text-[#9ea7b8]">
+                Mostrando <strong className="text-white font-bold">{filteredProducts.length}</strong> {filteredProducts.length === 1 ? 'equipo' : 'equipos'}
+                {selectedCategory !== 'todos' && activeCategoryObj ? (
+                  <span> en <strong className="text-[#9fcaff] font-bold">{activeCategoryObj.label}</strong></span>
+                ) : ''}
+              </span>
+
+              {/* Auto-play badge in carousel mode */}
+              {displayMode === 'carousel' && (
+                <button
+                  onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-mono-code transition-all cursor-pointer border ${
+                    isAutoPlaying
+                      ? 'bg-[#162a3f] text-[#9fcaff] border-[#294566] hover:bg-[#1e3854]'
+                      : 'bg-[#18202d] text-[#717d93] border-[#263346] hover:text-white'
+                  }`}
+                  title={isAutoPlaying ? "Pausar avance automático" : "Activar avance automático"}
+                >
+                  {isAutoPlaying ? (
+                    <>
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                      <Pause className="w-3.5 h-3.5" />
+                      <span>Carrusel Animado Activo</span>
+                    </>
+                  ) : (
+                    <>
+                      <Play className="w-3.5 h-3.5" />
+                      <span>Iniciar Animación</span>
+                    </>
+                  )}
+                </button>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1.5 bg-[#0d1117] p-1 rounded-lg border border-[#263346] self-end sm:self-auto">
+              <button
+                onClick={() => setDisplayMode('carousel')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono-code transition-all cursor-pointer ${
+                  displayMode === 'carousel'
+                    ? 'bg-[#9fcaff] text-[#0d1117] font-bold shadow-sm'
+                    : 'text-[#717d93] hover:text-white hover:bg-[#18202d]'
+                }`}
+                title="Ver equipos en carrusel animado"
+              >
+                <List className="w-3.5 h-3.5" />
+                <span>Carrusel Animado</span>
+              </button>
+              <button
+                onClick={() => setDisplayMode('grid')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-mono-code transition-all cursor-pointer ${
+                  displayMode === 'grid'
+                    ? 'bg-[#9fcaff] text-[#0d1117] font-bold shadow-sm'
+                    : 'text-[#717d93] hover:text-white hover:bg-[#18202d]'
+                }`}
+                title="Ver todos los equipos en rejilla estática"
+              >
+                <Grid className="w-3.5 h-3.5" />
+                <span>Rejilla Completa ({filteredProducts.length})</span>
+              </button>
+            </div>
+          </div>
+        )}
+
         {filteredProducts.length === 0 ? (
           <div className="py-16 text-center bg-[#131924] border border-dashed border-[#273244] rounded-2xl p-8">
             <Search className="w-12 h-12 text-[#717d93] mx-auto mb-3 opacity-50" />
@@ -496,16 +498,142 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
               <span>Restablecer Todos los Filtros</span>
             </button>
           </div>
+        ) : displayMode === 'grid' ? (
+          /* GRID MODE: Render all products side-by-side in responsive columns */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 pb-6 pt-1">
+            {filteredProducts.map((product) => {
+              const inCart = cartProductIds.includes(product.id);
+
+              return (
+                <div
+                  key={product.id}
+                  className="w-full group border border-[#232c3a] hover:border-[#9fcaff] rounded-2xl p-4 md:p-5 bg-[#141a24] hover:bg-[#18202d] transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-2xl flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Image Container with REF tag */}
+                    <div className="bg-[#1b2331] group-hover:bg-[#222c3d] h-56 mb-4 flex items-center justify-center p-4 relative overflow-hidden rounded-xl transition-colors border border-[#273244]">
+                      <span className="absolute top-3 right-3 bg-[#0d1117]/90 text-[#9fcaff] border border-[#2c384c] font-mono-code text-[10px] px-2.5 py-1 rounded-md font-semibold z-10 tracking-wider shadow-sm">
+                        REF: {product.ref}
+                      </span>
+
+                      {product.badge && (
+                        <span className="absolute top-3 left-3 bg-[#994700] text-white font-mono-code text-[10px] px-2.5 py-1 rounded-md font-bold uppercase z-10 shadow-sm">
+                          {product.badge}
+                        </span>
+                      )}
+
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="object-contain w-full h-full group-hover:scale-108 transition-transform duration-500 brightness-95 group-hover:brightness-105"
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <div className="px-1">
+                      <div className="mb-2">
+                        <span className="text-[10px] font-mono-code text-[#717d93] uppercase tracking-wider block mb-0.5">
+                          {product.categoryLabel || 'Maquinaria'}
+                        </span>
+                        <h4 className="font-display text-base md:text-lg font-bold text-white group-hover:text-[#9fcaff] transition-colors leading-snug min-h-[2.75rem] flex items-center">
+                          {product.name}
+                        </h4>
+                      </div>
+                      
+                      <p className="font-mono-code text-xs text-[#a0aabf] mb-4 leading-relaxed min-h-[2.5rem] line-clamp-2">
+                        {product.shortDesc}
+                      </p>
+
+                      {/* Specs pills */}
+                      <div className="grid grid-cols-2 gap-2 mb-4 bg-[#0d1117] p-3 rounded-xl border border-[#212836]">
+                        <div>
+                          <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase mb-0.5">Potencia</span>
+                          <span className="font-body text-xs font-semibold text-white block leading-snug">{product.power}</span>
+                        </div>
+                        <div>
+                          <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase mb-0.5">Capacidad</span>
+                          <span className="font-body text-xs font-semibold text-white block leading-snug">{product.capacity}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="pt-3 border-t border-[#222a38] flex items-center justify-between gap-2">
+                    <button
+                      onClick={() => onSelectProduct(product)}
+                      className="inline-flex items-center gap-1 text-xs font-mono-code text-[#9fcaff] hover:text-white font-semibold transition-colors cursor-pointer py-1"
+                    >
+                      <FileText className="w-3.5 h-3.5" />
+                      <span>Ficha Técnica</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+
+                    <button
+                      onClick={() => onAddToCart(product)}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-mono-code font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                        inCart
+                          ? 'bg-[#00497d] text-white border border-[#0061a4]'
+                          : 'bg-[#9fcaff] text-[#0d1117] hover:bg-white font-bold shadow-md'
+                      }`}
+                    >
+                      {inCart ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Agregado</span>
+                        </>
+                      ) : (
+                        <>
+                          <PlusCircle className="w-3.5 h-3.5" />
+                          <span>+ Cotizar</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         ) : (
-          <div className="relative">
-            {/* Scroll indicators on mobile */}
-            <div className="md:hidden flex justify-between items-center mb-2 px-1 text-[11px] font-mono-code text-[#717d93]">
-              <span>Desliza para ver más equipos →</span>
-              <span>{filteredProducts.length} ítems</span>
+          /* CAROUSEL MODE: Horizontal swipeable strip with navigation buttons */
+          <div className="relative group/carousel">
+            {/* Carousel navigation controls on sides */}
+            <button
+              onClick={scrollLeft}
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#0d1117]/90 text-[#9fcaff] hover:text-white border border-[#2c384c] flex items-center justify-center shadow-2xl opacity-80 hover:opacity-100 transition-all cursor-pointer"
+              title="Anterior"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+
+            <button
+              onClick={scrollRight}
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-[#0d1117]/90 text-[#9fcaff] hover:text-white border border-[#2c384c] flex items-center justify-center shadow-2xl opacity-80 hover:opacity-100 transition-all cursor-pointer"
+              title="Siguiente"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+
+            {/* Mobile / Status Scroll Indicator */}
+            <div className="flex justify-between items-center mb-2 px-1 text-[11px] font-mono-code text-[#717d93]">
+              <span className="flex items-center gap-1.5">
+                {isAutoPlaying && !isHovered && (
+                  <>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Avanzando automáticamente cada 3.2s</span>
+                  </>
+                )}
+                {isAutoPlaying && isHovered && (
+                  <span className="text-[#9fcaff]">Pausado por cursor (mueve el mouse para reanudar)</span>
+                )}
+              </span>
+              <span>Desliza para ver los {filteredProducts.length} equipos →</span>
             </div>
 
             <div
               ref={carouselRef}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
               className="flex gap-6 overflow-x-auto hide-scrollbar pb-6 pt-1 snap-x scroll-smooth"
             >
               {filteredProducts.map((product) => {
@@ -514,7 +642,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
                 return (
                   <div
                     key={product.id}
-                    className="min-w-[290px] sm:min-w-[340px] md:min-w-[360px] max-w-[380px] snap-start shrink-0 group border border-[#232c3a] hover:border-[#9fcaff] rounded-2xl p-4 bg-[#141a24] hover:bg-[#18202d] transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-2xl flex flex-col justify-between"
+                    className="min-w-[290px] sm:min-w-[340px] md:min-w-[360px] max-w-[380px] snap-start shrink-0 group border border-[#232c3a] hover:border-[#9fcaff] rounded-2xl p-4 md:p-5 bg-[#141a24] hover:bg-[#18202d] transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-2xl flex flex-col justify-between"
                   >
                     <div>
                       {/* Image Container with REF tag */}
@@ -538,28 +666,28 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
 
                       {/* Content */}
                       <div className="px-1">
-                        <div className="mb-1">
-                          <span className="text-[10px] font-mono-code text-[#717d93] uppercase tracking-wider block">
+                        <div className="mb-2">
+                          <span className="text-[10px] font-mono-code text-[#717d93] uppercase tracking-wider block mb-0.5">
                             {product.categoryLabel || 'Maquinaria'}
                           </span>
-                          <h4 className="font-display text-lg font-bold text-white line-clamp-1 group-hover:text-[#9fcaff] transition-colors">
+                          <h4 className="font-display text-base md:text-lg font-bold text-white group-hover:text-[#9fcaff] transition-colors leading-snug min-h-[2.75rem] flex items-center">
                             {product.name}
                           </h4>
                         </div>
                         
-                        <p className="font-mono-code text-xs text-[#a0aabf] mb-4 line-clamp-2 leading-relaxed h-8">
+                        <p className="font-mono-code text-xs text-[#a0aabf] mb-4 leading-relaxed min-h-[2.5rem] line-clamp-2">
                           {product.shortDesc}
                         </p>
 
                         {/* Specs pills */}
-                        <div className="grid grid-cols-2 gap-2 mb-4 bg-[#0d1117] p-2.5 rounded-xl border border-[#212836]">
+                        <div className="grid grid-cols-2 gap-2 mb-4 bg-[#0d1117] p-3 rounded-xl border border-[#212836]">
                           <div>
-                            <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase">Potencia</span>
-                            <span className="font-body text-xs font-semibold text-white truncate block">{product.power}</span>
+                            <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase mb-0.5">Potencia</span>
+                            <span className="font-body text-xs font-semibold text-white block leading-snug">{product.power}</span>
                           </div>
                           <div>
-                            <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase">Capacidad</span>
-                            <span className="font-body text-xs font-semibold text-white truncate block">{product.capacity}</span>
+                            <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase mb-0.5">Capacidad</span>
+                            <span className="font-body text-xs font-semibold text-white block leading-snug">{product.capacity}</span>
                           </div>
                         </div>
                       </div>
