@@ -135,6 +135,11 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                             src={displayImg}
                             alt={item.product.name}
                             className="w-14 h-14 object-contain rounded"
+                            onError={(e) => {
+                              if (item.product.image && e.currentTarget.src !== item.product.image) {
+                                e.currentTarget.src = item.product.image;
+                              }
+                            }}
                           />
                         ) : (
                           <div className="w-14 h-14 bg-[#e1e2ec] dark:bg-[#2c384c] rounded flex items-center justify-center text-[#717d93]">

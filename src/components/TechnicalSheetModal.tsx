@@ -79,6 +79,11 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
                   alt={product.name}
                   referrerPolicy="no-referrer"
                   className="max-h-64 max-w-full object-contain rounded-lg"
+                  onError={(e) => {
+                    if (product.image && e.currentTarget.src !== product.image) {
+                      e.currentTarget.src = product.image;
+                    }
+                  }}
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center h-48 text-[#717d93]">

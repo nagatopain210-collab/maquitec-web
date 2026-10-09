@@ -113,6 +113,11 @@ export const ProductCardImage: React.FC<ProductCardImageProps> = ({
           alt={productName}
           referrerPolicy="no-referrer"
           className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500 bg-[#0d1117]"
+          onError={(e) => {
+            if (defaultImage && e.currentTarget.src !== defaultImage) {
+              e.currentTarget.src = defaultImage;
+            }
+          }}
         />
       ) : (
         <div className="flex flex-col items-center justify-center h-full text-[#717d93]">
