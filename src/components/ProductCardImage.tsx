@@ -114,6 +114,14 @@ export const ProductCardImage: React.FC<ProductCardImageProps> = ({
           referrerPolicy="no-referrer"
           className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-500 bg-[#0d1117]"
           onError={(e) => {
+            const currentSrc = e.currentTarget.src;
+            if (currentSrc.includes('/images/') && !currentSrc.includes('./images/')) {
+              const filename = currentSrc.split('/images/')[1];
+              if (filename) {
+                e.currentTarget.src = `./images/${filename}`;
+                return;
+              }
+            }
             if (defaultImage && e.currentTarget.src !== defaultImage) {
               e.currentTarget.src = defaultImage;
             }

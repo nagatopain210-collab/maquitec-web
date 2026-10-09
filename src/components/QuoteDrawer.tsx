@@ -136,6 +136,14 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                             alt={item.product.name}
                             className="w-14 h-14 object-contain rounded"
                             onError={(e) => {
+                              const currentSrc = e.currentTarget.src;
+                              if (currentSrc.includes('/images/') && !currentSrc.includes('./images/')) {
+                                const filename = currentSrc.split('/images/')[1];
+                                if (filename) {
+                                  e.currentTarget.src = `./images/${filename}`;
+                                  return;
+                                }
+                              }
                               if (item.product.image && e.currentTarget.src !== item.product.image) {
                                 e.currentTarget.src = item.product.image;
                               }

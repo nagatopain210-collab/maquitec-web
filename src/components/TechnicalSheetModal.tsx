@@ -80,6 +80,14 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
                   referrerPolicy="no-referrer"
                   className="max-h-64 max-w-full object-contain rounded-lg"
                   onError={(e) => {
+                    const currentSrc = e.currentTarget.src;
+                    if (currentSrc.includes('/images/') && !currentSrc.includes('./images/')) {
+                      const filename = currentSrc.split('/images/')[1];
+                      if (filename) {
+                        e.currentTarget.src = `./images/${filename}`;
+                        return;
+                      }
+                    }
                     if (product.image && e.currentTarget.src !== product.image) {
                       e.currentTarget.src = product.image;
                     }
