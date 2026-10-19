@@ -18,6 +18,49 @@ interface QuoteDrawerProps {
   laserDetailNote?: string;
 }
 
+const CartItemThumbnail: React.FC<{ image?: string; name: string }> = ({ image, name }) => {
+  const [err, setErr] = useState(false);
+
+  React.useEffect(() => {
+    setErr(false);
+  }, [image]);
+
+  if (!image || err) {
+    return (
+      <div className="w-14 h-14 bg-[#141a24] rounded-lg flex items-center justify-center text-[#717d93] shrink-0 border border-[#273244]">
+        <ImageOff className="w-5 h-5 opacity-50 text-[#8b9bb4]" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={image}
+      alt={name}
+      className="w-14 h-14 object-contain rounded-lg bg-[#0d1117] shrink-0 border border-[#273244]"
+      onError={(e) => {
+        const currentSrc = e.currentTarget.src;
+        const attempts = parseInt(e.currentTarget.getAttribute('data-retry-count') || '0', 10);
+        if (attempts >= 2) {
+          setErr(true);
+          return;
+        }
+        e.currentTarget.setAttribute('data-retry-count', String(attempts + 1));
+        const filename = currentSrc.split('/').pop()?.split('?')[0];
+        if (!filename) {
+          setErr(true);
+          return;
+        }
+        if (currentSrc.includes('/images/')) {
+          e.currentTarget.src = `/${filename}`;
+        } else {
+          e.currentTarget.src = `/images/${filename}`;
+        }
+      }}
+    />
+  );
+};
+
 export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
   isOpen,
   onClose,
@@ -122,33 +165,12 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                     Equipos en Cotizador ({items.length})
                   </h4>
 
-                  {items.map((item) => {
-                    const displayImg = item.product.image;
-                    return (
-                      <div
-                        key={item.product.id}
-                        className="border border-[#c1c7d2] p-3 rounded bg-[#f8f9ff] flex items-center justify-between gap-3"
-                      >
-                        {displayImg ? (
-                          <img
-                            src={displayImg}
-                            alt={item.product.name}
-                            className="w-14 h-14 object-contain rounded"
-                            onError={(e) => {
-                              const currentSrc = e.currentTarget.src;
-                              if (currentSrc.includes('/images/') && !currentSrc.includes('./images/')) {
-                                const filename = currentSrc.split('/images/')[1];
-                                if (filename) {
-                                  e.currentTarget.src = `./images/${filename}`;
-                                }
-                              }
-                            }}
-                          />
-                        ) : (
-                          <div className="w-14 h-14 bg-[#e1e2ec] dark:bg-[#2c384c] rounded flex items-center justify-center text-[#717d93]">
-                            <ImageOff className="w-6 h-6 opacity-40" />
-                          </div>
-                        )}
+                  {items.map((item) => (
+                    <div
+                      key={item.product.id}
+                      className="border border-[#c1c7d2] p-3 rounded bg-[#f8f9ff] flex items-center justify-between gap-3"
+                    >
+                      <CartItemThumbnail image={item.product.image} name={item.product.name} />
                       <div className="flex-1 min-w-0">
                         <span className="font-mono-code text-[10px] bg-[#1a1c1e] text-white px-1.5 py-0.5 rounded">
                           REF: {item.product.ref}
@@ -192,8 +214,7 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                         </button>
                       </div>
                     </div>
-                  );
-                })}
+                  ))}
 
                   {laserDetailNote && (
                     <div className="border border-[#0061a4] p-3 rounded bg-[#eff4ff] text-xs font-mono-code text-[#00497d]">

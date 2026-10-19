@@ -519,7 +519,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
                       productName={product.name}
                       refCode={product.ref}
                       badge={product.badge}
-                      defaultImage={product.image}
+                      image={product.image}
                       onOpenZoom={(url) => setZoomedImage(url)}
                       className="h-56 mb-4"
                     />
@@ -646,7 +646,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
                         productName={product.name}
                         refCode={product.ref}
                         badge={product.badge}
-                        defaultImage={product.image}
+                        image={product.image}
                         onOpenZoom={(url) => setZoomedImage(url)}
                         className="h-60 mb-4"
                       />

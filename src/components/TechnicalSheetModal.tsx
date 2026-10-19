@@ -20,6 +20,11 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
   const isOnly110V = product.category === 'molinos' || !product.voltage.toLowerCase().includes('220v');
   const [selectedVoltage, setSelectedVoltage] = useState('110V');
   const [addedNotice, setAddedNotice] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  React.useEffect(() => {
+    setImgError(false);
+  }, [product.id, product.image]);
 
   const handleAdd = () => {
     onAddToCart(product, selectedVoltage);
@@ -59,30 +64,51 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
           {/* Main Hero row: Image + Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             {/* Image Box */}
-            <div className="bg-[#0d1117] border border-[#d3e4fe] p-4 rounded-xl flex items-center justify-center relative min-h-[280px] overflow-hidden group/modalimg">
-              {product.image ? (
+            <div className="bg-[#0d1117] border border-[#273244] p-4 rounded-xl flex items-center justify-center relative min-h-[280px] overflow-hidden group/modalimg">
+              {product.image && !imgError ? (
                 <img
                   src={product.image}
                   alt={product.name}
                   className="max-h-64 max-w-full object-contain rounded-lg"
                   onError={(e) => {
                     const currentSrc = e.currentTarget.src;
-                    if (currentSrc.includes('/images/') && !currentSrc.includes('./images/')) {
-                      const filename = currentSrc.split('/images/')[1];
-                      if (filename) {
-                        e.currentTarget.src = `./images/${filename}`;
-                      }
+                    const attempts = parseInt(e.currentTarget.getAttribute('data-retry-count') || '0', 10);
+                    if (attempts >= 2) {
+                      setImgError(true);
+                      return;
+                    }
+                    e.currentTarget.setAttribute('data-retry-count', String(attempts + 1));
+
+                    const filename = currentSrc.split('/').pop()?.split('?')[0];
+                    if (!filename) {
+                      setImgError(true);
+                      return;
+                    }
+
+                    if (currentSrc.includes('/images/')) {
+                      e.currentTarget.src = `/${filename}`;
+                    } else {
+                      e.currentTarget.src = `/images/${filename}`;
                     }
                   }}
                 />
               ) : (
-                <div className="flex flex-col items-center justify-center h-48 text-[#717d93]">
-                  <ImageOff className="w-12 h-12 mb-2 opacity-40" />
-                  <span className="text-xs font-mono-code font-medium">Sin Imagen</span>
+                <div className="flex flex-col items-center justify-center h-48 text-[#717d93] text-center px-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#141a24] border border-[#273244] flex items-center justify-center mb-2">
+                    <ImageOff className="w-6 h-6 opacity-60 text-[#717d93]" />
+                  </div>
+                  <span className="text-xs font-mono-code font-semibold text-[#8b9bb4]">
+                    {product.image ? 'Pendiente de Fotografía Real' : 'Sin Imagen'}
+                  </span>
+                  {product.image && (
+                    <span className="text-[10px] text-[#55637a] mt-0.5 font-mono-code">
+                      Archivo: {product.image.replace(/^\/(images\/)?/, '')}
+                    </span>
+                  )}
                 </div>
               )}
               
-              {product.image && (
+              {product.image && !imgError && (
                 <div className="absolute top-3 left-3 bg-[#0d1117]/95 border border-[#22c55e]/40 text-[#4ade80] font-mono-code text-[10px] px-2.5 py-1 rounded-md flex items-center gap-1.5 shadow">
                   <span className="w-2 h-2 rounded-full bg-[#22c55e]"></span>
                   <span className="font-semibold">Fotografía Real</span>

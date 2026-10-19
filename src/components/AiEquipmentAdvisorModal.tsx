@@ -170,9 +170,32 @@ export const AiEquipmentAdvisorModal: React.FC<AiEquipmentAdvisorModalProps> = (
               {recommendations.map((item) => (
                 <div key={item.id} className="border border-[#c1c7d2] p-4 rounded bg-[#f8f9ff] flex gap-3">
                   {item.image ? (
-                    <img src={item.image} alt={item.name} className="w-20 h-20 object-contain" />
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-20 h-20 object-contain rounded bg-[#0d1117] p-1 border border-[#273244]"
+                      onError={(e) => {
+                        const currentSrc = e.currentTarget.src;
+                        const attempts = parseInt(e.currentTarget.getAttribute('data-retry-count') || '0', 10);
+                        if (attempts >= 2) {
+                          e.currentTarget.style.display = 'none';
+                          return;
+                        }
+                        e.currentTarget.setAttribute('data-retry-count', String(attempts + 1));
+                        const filename = currentSrc.split('/').pop()?.split('?')[0];
+                        if (!filename) {
+                          e.currentTarget.style.display = 'none';
+                          return;
+                        }
+                        if (currentSrc.includes('/images/')) {
+                          e.currentTarget.src = `/${filename}`;
+                        } else {
+                          e.currentTarget.src = `/images/${filename}`;
+                        }
+                      }}
+                    />
                   ) : (
-                    <div className="w-20 h-20 bg-[#e1e2ec] rounded flex items-center justify-center text-[#717d93]">
+                    <div className="w-20 h-20 bg-[#141a24] rounded flex items-center justify-center text-[#717d93] border border-[#273244]">
                       <ImageOff className="w-8 h-8 opacity-40" />
                     </div>
                   )}
