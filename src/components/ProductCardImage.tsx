@@ -80,7 +80,7 @@ export const ProductCardImage: React.FC<ProductCardImageProps> = ({
           onError={(e) => {
             const currentSrc = e.currentTarget.src;
             const attempts = parseInt(e.currentTarget.getAttribute('data-retry-count') || '0', 10);
-            if (attempts >= 2) {
+            if (attempts >= 3) {
               setLoadError(true);
               return;
             }
@@ -92,10 +92,18 @@ export const ProductCardImage: React.FC<ProductCardImageProps> = ({
               return;
             }
 
-            if (currentSrc.includes('/images/')) {
-              e.currentTarget.src = `/${filename}`;
-            } else {
-              e.currentTarget.src = `/images/${filename}`;
+            const cleanRef = refCode.toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+
+            if (attempts === 0) {
+              if (currentSrc.includes('/images/')) {
+                e.currentTarget.src = `/${filename}`;
+              } else {
+                e.currentTarget.src = `/images/${filename}`;
+              }
+            } else if (attempts === 1) {
+              e.currentTarget.src = `/${cleanRef}.jpg`;
+            } else if (attempts === 2) {
+              e.currentTarget.src = `/images/${cleanRef}.jpg`;
             }
           }}
         />

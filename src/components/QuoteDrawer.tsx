@@ -18,7 +18,7 @@ interface QuoteDrawerProps {
   laserDetailNote?: string;
 }
 
-const CartItemThumbnail: React.FC<{ image?: string; name: string }> = ({ image, name }) => {
+const CartItemThumbnail: React.FC<{ image?: string; name: string; refCode?: string }> = ({ image, name, refCode }) => {
   const [err, setErr] = useState(false);
 
   React.useEffect(() => {
@@ -41,7 +41,7 @@ const CartItemThumbnail: React.FC<{ image?: string; name: string }> = ({ image, 
       onError={(e) => {
         const currentSrc = e.currentTarget.src;
         const attempts = parseInt(e.currentTarget.getAttribute('data-retry-count') || '0', 10);
-        if (attempts >= 2) {
+        if (attempts >= 3) {
           setErr(true);
           return;
         }
@@ -51,10 +51,19 @@ const CartItemThumbnail: React.FC<{ image?: string; name: string }> = ({ image, 
           setErr(true);
           return;
         }
-        if (currentSrc.includes('/images/')) {
-          e.currentTarget.src = `/${filename}`;
-        } else {
-          e.currentTarget.src = `/images/${filename}`;
+
+        const cleanRef = refCode ? refCode.toLowerCase().replace(/[^a-z0-9_-]/g, '-') : '';
+
+        if (attempts === 0) {
+          if (currentSrc.includes('/images/')) {
+            e.currentTarget.src = `/${filename}`;
+          } else {
+            e.currentTarget.src = `/images/${filename}`;
+          }
+        } else if (attempts === 1 && cleanRef) {
+          e.currentTarget.src = `/${cleanRef}.jpg`;
+        } else if (attempts === 2 && cleanRef) {
+          e.currentTarget.src = `/images/${cleanRef}.jpg`;
         }
       }}
     />
@@ -170,7 +179,7 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                       key={item.product.id}
                       className="border border-[#c1c7d2] p-3 rounded bg-[#f8f9ff] flex items-center justify-between gap-3"
                     >
-                      <CartItemThumbnail image={item.product.image} name={item.product.name} />
+                      <CartItemThumbnail image={item.product.image} name={item.product.name} refCode={item.product.ref} />
                       <div className="flex-1 min-w-0">
                         <span className="font-mono-code text-[10px] bg-[#1a1c1e] text-white px-1.5 py-0.5 rounded">
                           REF: {item.product.ref}

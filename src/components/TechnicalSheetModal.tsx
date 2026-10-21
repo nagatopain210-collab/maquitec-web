@@ -73,7 +73,7 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
                   onError={(e) => {
                     const currentSrc = e.currentTarget.src;
                     const attempts = parseInt(e.currentTarget.getAttribute('data-retry-count') || '0', 10);
-                    if (attempts >= 2) {
+                    if (attempts >= 3) {
                       setImgError(true);
                       return;
                     }
@@ -85,10 +85,18 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
                       return;
                     }
 
-                    if (currentSrc.includes('/images/')) {
-                      e.currentTarget.src = `/${filename}`;
-                    } else {
-                      e.currentTarget.src = `/images/${filename}`;
+                    const cleanRef = product.ref.toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+
+                    if (attempts === 0) {
+                      if (currentSrc.includes('/images/')) {
+                        e.currentTarget.src = `/${filename}`;
+                      } else {
+                        e.currentTarget.src = `/images/${filename}`;
+                      }
+                    } else if (attempts === 1) {
+                      e.currentTarget.src = `/${cleanRef}.jpg`;
+                    } else if (attempts === 2) {
+                      e.currentTarget.src = `/images/${cleanRef}.jpg`;
                     }
                   }}
                 />
