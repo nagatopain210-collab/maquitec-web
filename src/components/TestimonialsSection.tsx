@@ -4,25 +4,25 @@ import { Quote } from 'lucide-react';
 
 export const TestimonialsSection: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 bg-white" id="respaldo">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-10">
+    <section className="py-10 sm:py-14 md:py-24 bg-white" id="respaldo">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10">
         
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-extrabold text-[#1a1c1e]">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1a1c1e]">
             Respaldo Industrial
           </h2>
-          <p className="font-body text-base text-[#414750] mt-2">
+          <p className="font-body text-sm sm:text-base text-[#414750] mt-1.5 sm:mt-2">
             La industria colombiana confía en nuestra ingeniería y continuidad operativa.
           </p>
         </div>
 
-        {/* Testimonial Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Testimonial Cards Grid (1 column on mobile) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
           {TESTIMONIALS.map((t) => (
             <div
               key={t.id}
-              className="border border-[#c1c7d2] p-8 rounded bg-white shadow-xs flex flex-col items-center text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              className="border border-[#c1c7d2] p-5 sm:p-8 rounded-2xl bg-white shadow-xs flex flex-col items-center text-center hover:shadow-xl transition-all duration-300"
             >
               {/* Logo Circle */}
               <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-4 border border-[#c1c7d2] p-2 overflow-hidden shadow-xs">

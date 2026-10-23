@@ -46,28 +46,29 @@ export const LocationsMapSection: React.FC = () => {
   const currentLocation = locations[activeTab];
 
   return (
-    <section className="py-16 md:py-24 bg-[#141820] text-white border-b border-[#273244]" id="ubicaciones">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-10">
+    <section className="py-10 sm:py-14 md:py-24 bg-[#141820] text-white border-b border-[#273244]" id="ubicaciones">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1b2536] border border-[#2c3b54] text-[#9fcaff] text-xs font-mono-code uppercase font-bold tracking-wider">
             <MapPin className="w-3.5 h-3.5 text-[#25D366]" />
             <span>Puntos de Atención Presencial en Bogotá</span>
           </div>
-          <h2 className="font-display text-3xl md:text-4xl font-extrabold text-white">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-white">
             Nuestras Ubicaciones en Bogotá
           </h2>
-          <p className="font-body text-base text-[#9ea7b8]">
+          <p className="font-body text-sm sm:text-base text-[#9ea7b8]">
             Visita nuestra boutique de exhibición para ver la maquinaria en vivo o nuestra fábrica principal para tus proyectos de corte láser CNC.
           </p>
         </div>
 
         {/* Location Selector Tabs */}
-        <div className="flex flex-col sm:flex-row justify-center gap-3 mb-8">
+        <div className="flex flex-col sm:flex-row justify-center gap-2.5 sm:gap-3 mb-6 sm:mb-8">
           <button
+            type="button"
             onClick={() => setActiveTab('boutique')}
-            className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-mono-code text-xs font-bold transition-all cursor-pointer ${
+            className={`min-h-[48px] flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono-code text-xs font-bold transition-all cursor-pointer active:scale-[0.98] ${
               activeTab === 'boutique'
                 ? 'bg-[#0061a4] text-white shadow-lg border border-[#9fcaff]/40'
                 : 'bg-[#1b2331] text-[#9ea7b8] hover:text-white hover:bg-[#232d3f] border border-[#273244]'
@@ -78,8 +79,9 @@ export const LocationsMapSection: React.FC = () => {
           </button>
 
           <button
+            type="button"
             onClick={() => setActiveTab('fabrica')}
-            className={`flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-mono-code text-xs font-bold transition-all cursor-pointer ${
+            className={`min-h-[48px] flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-mono-code text-xs font-bold transition-all cursor-pointer active:scale-[0.98] ${
               activeTab === 'fabrica'
                 ? 'bg-[#0061a4] text-white shadow-lg border border-[#9fcaff]/40'
                 : 'bg-[#1b2331] text-[#9ea7b8] hover:text-white hover:bg-[#232d3f] border border-[#273244]'
@@ -91,7 +93,7 @@ export const LocationsMapSection: React.FC = () => {
         </div>
 
         {/* Main Grid: Map Embed & Details Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
           
           {/* Left Column: Location Info Card */}
           <div className="lg:col-span-5 bg-[#1b2331] border border-[#28354a] rounded-2xl p-6 md:p-8 flex flex-col justify-between space-y-6 shadow-xl">
@@ -183,7 +185,7 @@ export const LocationsMapSection: React.FC = () => {
                   href={currentLocation.googleMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#0061a4] hover:bg-[#00497d] text-white font-mono-code text-xs font-bold py-3 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all text-center"
+                  className="min-h-[48px] bg-[#0061a4] hover:bg-[#00497d] active:bg-[#003d69] text-white font-mono-code text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all text-center active:scale-[0.98]"
                 >
                   <Navigation className="w-3.5 h-3.5" />
                   <span>Google Maps</span>
@@ -194,7 +196,7 @@ export const LocationsMapSection: React.FC = () => {
                   href={currentLocation.wazeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#33ccff] hover:bg-[#29b8ea] text-[#0d1117] font-mono-code text-xs font-bold py-3 px-3 rounded-lg flex items-center justify-center gap-1.5 transition-all text-center"
+                  className="min-h-[48px] bg-[#33ccff] hover:bg-[#29b8ea] active:bg-[#209ecc] text-[#0d1117] font-mono-code text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all text-center active:scale-[0.98]"
                 >
                   <Navigation className="w-3.5 h-3.5" />
                   <span>Waze</span>
@@ -206,7 +208,7 @@ export const LocationsMapSection: React.FC = () => {
                 href={`https://wa.me/573508826094?text=${encodeURIComponent(`Hola Maquitec, solicito indicaciones para llegar a la dirección: ${currentLocation.address}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-[#25D366] hover:bg-[#20ba59] text-white font-mono-code text-xs font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all shadow-md uppercase"
+                className="w-full min-h-[48px] bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1fa851] text-white font-mono-code text-xs font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md uppercase active:scale-[0.98]"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Confirmar Visita por WhatsApp</span>

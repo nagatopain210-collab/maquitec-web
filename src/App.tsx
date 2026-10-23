@@ -15,6 +15,7 @@ import { QuoteDrawer, CartItem } from './components/QuoteDrawer';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { LeadChatbotWidget } from './components/LeadChatbotWidget';
+import { MobileBottomCtaBar } from './components/MobileBottomCtaBar';
 
 export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -90,8 +91,8 @@ export default function App() {
         quoteCount={totalCartCount}
       />
 
-      {/* Main Content Sections */}
-      <main className="flex-1">
+      {/* Main Content Sections - pb-16 on mobile for sticky bottom CTA bar */}
+      <main className="flex-1 pb-16 md:pb-0">
         {/* Hero Section with Quick Quote Form */}
         <Hero onQuickQuoteSubmit={handleQuickQuoteSubmit} />
 
@@ -121,6 +122,12 @@ export default function App() {
 
       {/* Footer */}
       <Footer />
+
+      {/* Mobile Fixed High-Conversion CTA Bar (Sticky bottom for phones) */}
+      <MobileBottomCtaBar
+        onOpenQuoteDrawer={() => setIsQuoteDrawerOpen(true)}
+        quoteCount={totalCartCount}
+      />
 
       {/* Floating Action Buttons */}
       <LeadChatbotWidget />

@@ -53,9 +53,9 @@ export const ProductCardImage: React.FC<ProductCardImageProps> = ({
         </div>
       )}
 
-      {/* Quick Zoom Button */}
+      {/* Quick Zoom Button - Visible on touch devices, hover on desktop */}
       {displayImage && !loadError && onOpenZoom && (
-        <div className="absolute bottom-2 right-2 z-10 opacity-0 group-hover/img:opacity-100 transition-opacity duration-200">
+        <div className="absolute bottom-2 right-2 z-10 opacity-90 sm:opacity-0 group-hover/img:opacity-100 transition-opacity duration-200">
           <button
             type="button"
             onClick={(e) => {
@@ -63,9 +63,9 @@ export const ProductCardImage: React.FC<ProductCardImageProps> = ({
               onOpenZoom(displayImage);
             }}
             title="Ver fotografía en alta resolución"
-            className="p-1.5 bg-[#141a24]/90 hover:bg-[#202938] text-white rounded border border-[#2f3b4e] shadow transition-colors cursor-pointer"
+            className="min-w-[40px] min-h-[40px] flex items-center justify-center p-2 bg-[#141a24]/90 hover:bg-[#202938] active:scale-95 text-white rounded-lg border border-[#2f3b4e] shadow transition-all cursor-pointer"
           >
-            <ZoomIn className="w-3.5 h-3.5" />
+            <ZoomIn className="w-4 h-4" />
           </button>
         </div>
       )}

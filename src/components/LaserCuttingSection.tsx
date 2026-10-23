@@ -16,36 +16,36 @@ export const LaserCuttingSection: React.FC<LaserCuttingSectionProps> = ({ onOpen
   const laserCutImg3 = "https://lh3.googleusercontent.com/aida-public/AB6AXuB1NM7zrxBWzGHUGy9Cptwvjp3Do8ioyx2Fj27JqEkql3Y6mK9r34t4uOWdTTjSJMDtrx0ccR7RPT5w_km1l3pKLiKr-3CsGuAlboc8vY2-CwcSPJMc9uAUr7lSdSjKPDBnJpAgUJDEfB38JaCse3DXhVCxXBRtInRVaFkdyh38epS-AHWXqnS8-_DMGoogjU8DJIiblDvgJQL4vsqe0lfJ2h3Zvm5r9NaimOje-3gOPn_YQ8pbbLSC2w";
 
   return (
-    <section className="py-16 md:py-24 bg-[#0a0d14] text-white border-y border-[#1f2838]" id="corte-laser">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-10 space-y-12">
+    <section className="py-10 sm:py-14 md:py-24 bg-[#0a0d14] text-white border-y border-[#1f2838]" id="corte-laser">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10 space-y-8 sm:space-y-12">
         
         {/* Main Header & Image Showcase Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
           
           {/* Left Text & Technical Specifications Column */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-4 sm:space-y-6">
             <div className="inline-flex items-center gap-2 bg-[#162235] px-3.5 py-1.5 rounded-full text-xs font-mono-code text-[#9fcaff] border border-[#263750] shadow-sm">
-              <Cpu className="w-4 h-4 text-[#9fcaff]" />
-              <span>Corte por Fibra Óptica High-Power 6000W</span>
+              <Cpu className="w-4 h-4 text-[#9fcaff] shrink-0" />
+              <span>Corte por Fibra Óptica 6000W</span>
             </div>
 
-            <h2 className="font-display text-3xl md:text-5xl font-extrabold text-white leading-tight tracking-tight">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-extrabold text-white leading-tight tracking-tight">
               Servicio de Corte Láser CNC
             </h2>
 
-            <p className="font-body text-base text-[#a0aabf] leading-relaxed">
+            <p className="font-body text-sm sm:text-base text-[#a0aabf] leading-relaxed">
               Precisión micrométrica para maquetación y producción metalmecánica. Cortamos láminas de acero inoxidable 304, acero al carbono y aluminio con bordes impecables, listos para plegado y soldadura.
             </p>
 
             {/* Technical Parameters Pill List */}
-            <div className="grid grid-cols-2 gap-3 pt-2">
+            <div className="grid grid-cols-2 gap-2.5 sm:gap-3 pt-1 sm:pt-2">
               <div className="bg-[#121824] p-3 rounded-xl border border-[#212b3c]">
                 <span className="block font-mono-code text-[10px] text-[#717d93] uppercase font-semibold">Tolerancia Máxima</span>
-                <span className="font-mono-code text-base font-bold text-white">± 0.05 mm</span>
+                <span className="font-mono-code text-sm sm:text-base font-bold text-white">± 0.05 mm</span>
               </div>
               <div className="bg-[#121824] p-3 rounded-xl border border-[#212b3c]">
                 <span className="block font-mono-code text-[10px] text-[#717d93] uppercase font-semibold">Espesor Inox 304</span>
-                <span className="font-mono-code text-base font-bold text-[#9fcaff]">Hasta 16 mm</span>
+                <span className="font-mono-code text-sm sm:text-base font-bold text-[#9fcaff]">Hasta 16 mm</span>
               </div>
               <div className="bg-[#121824] p-3 rounded-xl border border-[#212b3c]">
                 <span className="block font-mono-code text-[10px] text-[#717d93] uppercase font-semibold">Mesa de Trabajo</span>
@@ -57,20 +57,21 @@ export const LaserCuttingSection: React.FC<LaserCuttingSectionProps> = ({ onOpen
               </div>
             </div>
 
-            <div className="pt-3 flex flex-col sm:flex-row gap-3">
+            <div className="pt-2 sm:pt-3 flex flex-col sm:flex-row gap-2.5 sm:gap-3">
               <a
                 href={`https://wa.me/573508826094?text=${encodeURIComponent("Hola Maquitec, deseo cotizar un proyecto de corte láser CNC. Adjunto planos en DXF/DWG.")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 bg-[#25D366] text-white font-mono-code text-xs px-6 py-3.5 rounded-xl hover:bg-[#20bd5a] transition-all cursor-pointer uppercase font-bold shadow-lg shadow-[#25D366]/20"
+                className="min-h-[48px] inline-flex items-center justify-center gap-2.5 bg-[#25D366] active:bg-[#1fa851] text-white font-mono-code text-xs px-6 py-3 rounded-xl hover:bg-[#20bd5a] active:scale-[0.98] transition-all cursor-pointer uppercase font-bold shadow-lg shadow-[#25D366]/20"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Enviar Planos por WhatsApp</span>
               </a>
 
               <button
+                type="button"
                 onClick={handleQuoteClick}
-                className="inline-flex items-center justify-center gap-2 border border-[#303f56] bg-[#141b28] text-white font-mono-code text-xs px-5 py-3.5 rounded-xl hover:bg-[#1f2b3e] hover:border-[#9fcaff] transition-all cursor-pointer font-bold uppercase"
+                className="min-h-[48px] inline-flex items-center justify-center gap-2 border border-[#303f56] bg-[#141b28] active:bg-[#1e2a3c] text-white font-mono-code text-xs px-5 py-3 rounded-xl hover:bg-[#1f2b3e] hover:border-[#9fcaff] active:scale-[0.98] transition-all cursor-pointer font-bold uppercase"
               >
                 <span>Solicitar Asesoría</span>
                 <ArrowUpRight className="w-4 h-4 text-[#9fcaff]" />

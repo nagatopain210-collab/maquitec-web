@@ -3,23 +3,23 @@ import { TrendingDown, TrendingUp, ShieldCheck } from 'lucide-react';
 
 export const SuccessCasesSection: React.FC = () => {
   return (
-    <section className="py-16 md:py-24 bg-[#eff4ff] border-t border-[#c1c7d2]">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-10">
+    <section className="py-10 sm:py-14 md:py-24 bg-[#eff4ff] border-t border-[#c1c7d2]">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10">
         
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="font-display text-3xl md:text-4xl font-extrabold text-[#1a1c1e]">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1a1c1e]">
             Casos de Éxito Reales
           </h2>
-          <p className="font-body text-base text-[#414750] mt-2">
+          <p className="font-body text-sm sm:text-base text-[#414750] mt-1.5 sm:mt-2">
             Resultados tangibles y medibles para su restaurante o planta de procesamiento.
           </p>
         </div>
 
-        {/* 3 Columns Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* 3 Columns Cards (1 column on mobile) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
           
-          <div className="p-8 border border-[#c1c7d2] rounded bg-white hover:shadow-lg transition-shadow duration-300">
+          <div className="p-5 sm:p-8 border border-[#c1c7d2] rounded-2xl bg-white hover:shadow-lg transition-shadow duration-300">
             <div className="w-12 h-12 bg-[#f3f4f6] rounded flex items-center justify-center text-[#1a1c1e] mb-4">
               <TrendingDown className="w-8 h-8" />
             </div>

@@ -5,11 +5,11 @@ export const Footer: React.FC = () => {
   const logoWhite = "https://lh3.googleusercontent.com/aida-public/AB6AXuDC1frKWctmN832Pap6kVFm5jCkghbtqFAYISbPQs4TyB-Vx-zzgEEVmZZETi642dd_p4kX_pEodAoekeJnyGR0fIg8WFNK5CEMuWH0VsM5XgJVTBkcdPktAvbBQ4c3nm157SZ6kSEmt-oGd0y6XDIWf21lDGVPUAIaRjq_HZv1ca8s4KJiobxyZURxl4a7VlcqUfQnEXkfzXro8LDsbBkhd7TNgnyGqxFPxXgeK4G_yydOqv0Awu7vP0xSdJaAenlGBE8";
 
   return (
-    <footer className="bg-[#1a1c1e] text-white py-16 border-t border-[#5d5e60]" id="contacto">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-[#1a1c1e] text-white py-10 sm:py-14 md:py-16 border-t border-[#5d5e60]" id="contacto">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10 grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8">
         
         {/* Brand Column */}
-        <div className="md:col-span-2 space-y-4">
+        <div className="md:col-span-2 space-y-3.5 sm:space-y-4">
           <a href="#" className="inline-block transition-transform duration-300 hover:scale-105">
             <div className="bg-black px-3.5 py-2 rounded-2xl border-[3.5px] border-white shadow-lg inline-flex items-center justify-center">
               <img

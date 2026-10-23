@@ -16,16 +16,16 @@ export const AboutSection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[#ffffff]" id="nosotros">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <section className="py-10 sm:py-14 md:py-24 bg-[#ffffff]" id="nosotros">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         
         {/* Left Text */}
-        <div className="space-y-6">
-          <h2 className="font-display text-3xl md:text-4xl font-extrabold text-[#1a1c1e] mb-4">
+        <div className="space-y-4 sm:space-y-6">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#1a1c1e] mb-2 sm:mb-4">
             Nuestra Ingeniería, Su Éxito
           </h2>
 
-          <ul className="space-y-5 font-body text-base md:text-lg text-[#414750]">
+          <ul className="space-y-4 sm:space-y-5 font-body text-sm sm:text-base md:text-lg text-[#414750]">
             <li className="flex items-start gap-3">
               <div className="p-2 bg-[#f3f4f6] rounded text-[#1a1c1e] shrink-0 mt-1">
                 <MapPin className="w-5 h-5 text-[#0061a4]" />
@@ -65,10 +65,10 @@ export const AboutSection: React.FC = () => {
             </li>
           </ul>
 
-          <div className="pt-4">
+          <div className="pt-2 sm:pt-4">
             <button
               onClick={() => setVisitModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 bg-[#1a1c1e] text-white font-mono-code text-xs px-6 py-3.5 rounded shadow-md hover:bg-[#454749] hover:scale-102 transition-all cursor-pointer uppercase font-bold"
+              className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-[#1a1c1e] active:bg-[#000000] text-white font-mono-code text-xs px-6 py-3 rounded-xl shadow-md active:scale-[0.98] transition-all cursor-pointer uppercase font-bold"
             >
               <Factory className="w-4 h-4" />
               <span>Conoce Nuestra Fábrica</span>

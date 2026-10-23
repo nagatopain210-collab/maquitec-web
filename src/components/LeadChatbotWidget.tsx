@@ -67,16 +67,16 @@ export const LeadChatbotWidget: React.FC<LeadChatbotWidgetProps> = ({
 
   return (
     <>
-      {/* Floating Chat Trigger Button (Placed right above WhatsApp Button) */}
-      <div className="fixed bottom-24 right-6 z-50 flex flex-col items-end gap-2">
+      {/* Floating Chat Trigger Button (Adjusted for mobile to rest above bottom sticky bar) */}
+      <div className="fixed bottom-20 right-3.5 sm:right-6 md:bottom-24 md:right-6 z-40 flex flex-col items-end gap-2">
         {/* Callout Prompt Tooltip (fixed, non-animated) */}
         {!isOpen && hasNewNotice && (
-          <div className="bg-[#1a1c1e] text-white text-xs px-3.5 py-2 rounded-xl shadow-xl border border-[#35383c] flex items-center gap-2 max-w-[240px]">
+          <div className="bg-[#1a1c1e] text-white text-xs px-3.5 py-2 rounded-xl shadow-xl border border-[#35383c] flex items-center gap-2 max-w-[220px] sm:max-w-[240px]">
             <span className="w-2 h-2 rounded-full bg-[#25D366] shrink-0"></span>
-            <span className="font-body">¿Cotizar equipo o corte láser? ¡Habla con nuestro chatbot!</span>
+            <span className="font-body text-[11px] sm:text-xs">¿Asesoría técnica inmediata?</span>
             <button
               onClick={() => setHasNewNotice(false)}
-              className="text-gray-400 hover:text-white p-0.5"
+              className="text-gray-400 hover:text-white p-0.5 ml-auto"
               title="Cerrar aviso"
             >
               <X className="w-3.5 h-3.5" />
@@ -84,18 +84,18 @@ export const LeadChatbotWidget: React.FC<LeadChatbotWidgetProps> = ({
           </div>
         )}
 
-        {/* Floating Button */}
+        {/* Floating Button with min 48px target */}
         <button
           onClick={toggleChat}
-          className="relative bg-[#0061a4] hover:bg-[#00497d] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer group"
+          className="relative bg-[#0061a4] hover:bg-[#00497d] active:bg-[#00375e] text-white w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer group"
           title="Asistente Virtual Maquitec"
         >
           {isOpen ? (
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
           ) : (
             <>
-              <Bot className="w-7 h-7 group-hover:rotate-12 transition-transform" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-[#25D366] border-2 border-white rounded-full"></span>
+              <Bot className="w-6 h-6 sm:w-7 sm:h-7" />
+              <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-[#25D366] border-2 border-white rounded-full"></span>
             </>
           )}
         </button>
@@ -103,7 +103,7 @@ export const LeadChatbotWidget: React.FC<LeadChatbotWidgetProps> = ({
 
       {/* Floating Chat Box Window */}
       {isOpen && (
-        <div className="fixed bottom-40 right-4 sm:right-6 z-50 w-[94vw] sm:w-[390px] max-h-[580px] bg-white border border-[#c1c7d2] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
+        <div className="fixed bottom-20 right-2 sm:right-6 sm:bottom-40 z-50 w-[95vw] sm:w-[390px] max-h-[75vh] sm:max-h-[580px] bg-white border border-[#c1c7d2] rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
           
           {/* Header */}
           <div className="bg-[#1a1c1e] text-white p-4 flex items-center justify-between border-b border-[#35383c]">

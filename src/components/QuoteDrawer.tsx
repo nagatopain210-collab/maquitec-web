@@ -196,28 +196,34 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                       </div>
 
                       <div className="flex flex-col items-end gap-2">
-                        <div className="flex items-center border border-[#c1c7d2] rounded bg-white">
+                        <div className="flex items-center border border-[#c1c7d2] rounded-lg bg-white overflow-hidden shadow-xs">
                           <button
+                            type="button"
                             onClick={() => onUpdateQuantity(item.product.id, -1)}
-                            className="px-2 py-0.5 text-xs font-bold"
+                            className="min-w-[36px] min-h-[36px] flex items-center justify-center text-sm font-bold text-[#1a1c1e] hover:bg-gray-100 active:bg-gray-200 transition-colors"
+                            aria-label="Disminuir cantidad"
                           >
                             -
                           </button>
-                          <span className="px-2 text-xs font-mono-code font-bold">
+                          <span className="px-2 text-xs font-mono-code font-bold min-w-[24px] text-center">
                             {item.quantity}
                           </span>
                           <button
+                            type="button"
                             onClick={() => onUpdateQuantity(item.product.id, 1)}
-                            className="px-2 py-0.5 text-xs font-bold"
+                            className="min-w-[36px] min-h-[36px] flex items-center justify-center text-sm font-bold text-[#1a1c1e] hover:bg-gray-100 active:bg-gray-200 transition-colors"
+                            aria-label="Aumentar cantidad"
                           >
                             +
                           </button>
                         </div>
 
                         <button
+                          type="button"
                           onClick={() => onRemoveItem(item.product.id)}
-                          className="text-[#ba1a1a] hover:opacity-80 p-1"
-                          title="Eliminar"
+                          className="min-w-[36px] min-h-[36px] flex items-center justify-center text-[#ba1a1a] hover:bg-red-50 rounded-lg transition-colors p-1"
+                          title="Eliminar equipo"
+                          aria-label="Eliminar equipo de la cotización"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -256,11 +262,11 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
                       placeholder="Ej. Rest. El Parrillón"
-                      className="w-full bg-[#f3f4f6] border border-[#c1c7d2] rounded px-3 py-2 text-xs font-body"
+                      className="w-full min-h-[44px] bg-[#f8f9fb] border border-[#c1c7d2] rounded-xl px-3 py-2 text-base md:text-xs font-body focus:outline-none focus:border-[#0061a4]"
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <div>
                       <label className="block font-mono-code text-[11px] text-[#1a1c1e] font-semibold uppercase mb-1">
                         Teléfono / WhatsApp *
@@ -271,7 +277,7 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                         value={clientPhone}
                         onChange={(e) => setClientPhone(e.target.value)}
                         placeholder="+57 300 000 0000"
-                        className="w-full bg-[#f3f4f6] border border-[#c1c7d2] rounded px-3 py-2 text-xs font-body"
+                        className="w-full min-h-[44px] bg-[#f8f9fb] border border-[#c1c7d2] rounded-xl px-3 py-2 text-base md:text-xs font-body focus:outline-none focus:border-[#0061a4]"
                       />
                     </div>
                     <div>
@@ -283,7 +289,7 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                         value={clientCity}
                         onChange={(e) => setClientCity(e.target.value)}
                         placeholder="Bogotá, Medellín, etc."
-                        className="w-full bg-[#f3f4f6] border border-[#c1c7d2] rounded px-3 py-2 text-xs font-body"
+                        className="w-full min-h-[44px] bg-[#f8f9fb] border border-[#c1c7d2] rounded-xl px-3 py-2 text-base md:text-xs font-body focus:outline-none focus:border-[#0061a4]"
                       />
                     </div>
                   </div>
@@ -297,13 +303,13 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                       value={clientComments}
                       onChange={(e) => setClientComments(e.target.value)}
                       placeholder="Ej. Requiere transporte a planta o instalación..."
-                      className="w-full bg-[#f3f4f6] border border-[#c1c7d2] rounded px-3 py-2 text-xs font-body"
+                      className="w-full bg-[#f8f9fb] border border-[#c1c7d2] rounded-xl px-3 py-2 text-base md:text-xs font-body focus:outline-none focus:border-[#0061a4]"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-[#25D366] text-white font-mono-code text-xs py-3.5 rounded font-bold uppercase hover:brightness-105 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md mt-4"
+                    className="w-full min-h-[48px] bg-[#25D366] hover:bg-[#20ba59] active:bg-[#1fa851] text-white font-mono-code text-xs py-3.5 rounded-xl font-bold uppercase transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md mt-4 active:scale-[0.98]"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span>Enviar Cotización por WhatsApp</span>

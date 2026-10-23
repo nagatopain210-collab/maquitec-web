@@ -241,34 +241,35 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
 
         </div>
 
-        {/* Footer Actions */}
-        <div className="sticky bottom-0 bg-white border-t border-[#c1c7d2] px-6 py-4 flex flex-col sm:flex-row gap-3 items-center justify-between z-10">
+        {/* Footer Actions with 48px touch targets */}
+        <div className="sticky bottom-0 bg-white border-t border-[#c1c7d2] px-4 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row gap-2.5 sm:gap-3 items-center justify-between z-10">
           <a
             href={`https://wa.me/573508826094?text=${encodeURIComponent(whatsappMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#25D366] text-white font-mono-code text-xs px-5 py-3 rounded font-bold hover:brightness-105 transition-all cursor-pointer shadow-sm"
+            className="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 bg-[#25D366] active:bg-[#1fa851] text-white font-mono-code text-xs px-5 py-3 rounded-xl font-bold transition-all cursor-pointer shadow-sm active:scale-[0.98]"
           >
-            <MessageSquare className="w-4 h-4" />
+            <MessageSquare className="w-4 h-4 shrink-0" />
             <span>Consultar Asesor vía WhatsApp</span>
           </a>
 
           <button
+            type="button"
             onClick={handleAdd}
-            className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 font-mono-code text-xs px-6 py-3 rounded font-bold uppercase transition-all cursor-pointer ${
+            className={`w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2 font-mono-code text-xs px-6 py-3 rounded-xl font-bold uppercase transition-all cursor-pointer active:scale-[0.98] ${
               addedNotice
                 ? 'bg-[#00497d] text-white'
-                : 'bg-[#1a1c1e] text-white hover:bg-[#454749]'
+                : 'bg-[#1a1c1e] text-white active:bg-black hover:bg-[#454749]'
             }`}
           >
             {addedNotice ? (
               <>
-                <Check className="w-4 h-4" />
+                <Check className="w-4 h-4 shrink-0" />
                 <span>¡Agregado a Cotización!</span>
               </>
             ) : (
               <>
-                <Plus className="w-4 h-4" />
+                <Plus className="w-4 h-4 shrink-0" />
                 <span>{isInCart ? 'Actualizar en Cotizador' : 'Agregar a la Cotización'}</span>
               </>
             )}
