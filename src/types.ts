@@ -8,7 +8,7 @@ export interface Product {
   ref: string;
   name: string;
   category: string;
-  group?: 'alimentos' | 'corte_laser' | 'otros';
+  group?: 'alimentos' | 'empaque' | 'corte_laser' | 'otros';
   categoryLabel: string;
   image: string;
   shortDesc: string;

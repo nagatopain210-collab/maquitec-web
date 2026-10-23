@@ -13,6 +13,7 @@ import {
   Utensils, 
   Cpu, 
   Box, 
+  Package,
   Sparkles,
   X,
   Grid,
@@ -38,7 +39,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
   onAddToCart,
   cartProductIds
 }) => {
-  const [selectedGroup, setSelectedGroup] = useState<'todos' | 'alimentos' | 'corte_laser' | 'otros'>('todos');
+  const [selectedGroup, setSelectedGroup] = useState<'todos' | 'alimentos' | 'empaque' | 'corte_laser' | 'otros'>('todos');
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [displayMode, setDisplayMode] = useState<'carousel' | 'grid'>('carousel');
@@ -72,16 +73,23 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
     { 
       id: 'todos', 
       label: 'Todos los Equipos', 
-      desc: 'Catálogo industrial completo',
+      desc: 'Catálogo completo de maquinaria',
       icon: Layers, 
       count: products.length 
     },
     { 
       id: 'alimentos', 
       label: 'Maquinaria de Alimentos', 
-      desc: 'Procesamiento e higiene Inox',
+      desc: 'Procesamiento, cárnicos & snacks',
       icon: Utensils, 
       count: products.filter(p => !p.group || p.group === 'alimentos').length 
+    },
+    { 
+      id: 'empaque', 
+      label: 'Línea de Empaque & Vacío', 
+      desc: 'Empacadoras al vacío y selladoras',
+      icon: Package, 
+      count: products.filter(p => p.group === 'empaque').length 
     },
     { 
       id: 'corte_laser', 
@@ -93,7 +101,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
     { 
       id: 'otros', 
       label: 'Otros / Accesorios', 
-      desc: 'Repuestos & consumibles',
+      desc: 'Repuestos & consumibles inox',
       icon: Box, 
       count: products.filter(p => p.group === 'otros').length 
     }
@@ -127,23 +135,36 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
     return [{ id: 'todos', label: 'Todas las Subcategorías', count: activeProducts.length }, ...list];
   }, [products, selectedGroup]);
 
-  const handleGroupChange = (groupId: 'todos' | 'alimentos' | 'corte_laser' | 'otros') => {
+  const handleGroupChange = (groupId: 'todos' | 'alimentos' | 'empaque' | 'corte_laser' | 'otros') => {
     setSelectedGroup(groupId);
     setSelectedCategory('todos');
   };
 
   const filteredProducts = products.filter((p) => {
     // Group filter
-    const matchesGroup = selectedGroup === 'todos' || 
-      (p.group ? p.group === selectedGroup : selectedGroup === 'alimentos');
+    const productGroup = p.group || 'alimentos';
+    const matchesGroup = selectedGroup === 'todos' || productGroup === selectedGroup;
     
     // Subcategory filter
     const matchesCategory = selectedCategory === 'todos' || p.category === selectedCategory;
     
-    // Search query
-    const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          p.ref.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          p.shortDesc.toLowerCase().includes(searchQuery.toLowerCase());
+    // Real-time search query matching name or reference (accent and case-insensitive)
+    if (!searchQuery.trim()) {
+      return matchesGroup && matchesCategory;
+    }
+
+    const normalize = (text: string) =>
+      (text || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+
+    const normalizedQuery = normalize(searchQuery.trim());
+    const queryTerms = normalizedQuery.split(/\s+/).filter(Boolean);
+
+    const target = normalize(`${p.name} ${p.ref} ${p.categoryLabel || ''} ${p.shortDesc || ''}`);
+
+    const matchesSearch = queryTerms.every((term) => target.includes(term));
 
     return matchesGroup && matchesCategory && matchesSearch;
   });
@@ -212,20 +233,139 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
         </div>
 
         {/* =========================================================================
+            BARRA DE BÚSQUEDA EN TIEMPO REAL (Prominent Top Real-Time Search Bar)
+           ========================================================================= */}
+        <div className="mb-10 p-5 md:p-7 bg-gradient-to-r from-[#111722] via-[#162130] to-[#111722] border-2 border-[#2b3c54] rounded-2xl shadow-2xl relative overflow-hidden">
+          {/* Decorative ambient glow */}
+          <div className="absolute -top-16 -right-16 w-60 h-60 bg-[#0061a4]/20 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div className="flex flex-col gap-4 relative z-10">
+            {/* Header: Label, Live pulse & Count */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <label 
+                htmlFor="catalog-realtime-search-top"
+                className="text-xs md:text-sm font-mono-code uppercase tracking-wider text-[#9fcaff] font-bold flex items-center gap-2 cursor-pointer"
+              >
+                <Search className="w-4 h-4 text-[#9fcaff]" />
+                <span>Búsqueda en Tiempo Real por Nombre o Referencia</span>
+              </label>
+
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-mono-code text-[#9ea7b8] flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
+                  <span>
+                    {searchQuery.trim() ? (
+                      <>
+                        Encontrados: <strong className="text-white font-bold">{filteredProducts.length}</strong> de {products.length}
+                      </>
+                    ) : (
+                      <>{products.length} equipos registrados</>
+                    )}
+                  </span>
+                </span>
+
+                {hasActiveFilters && (
+                  <button
+                    onClick={() => {
+                      setSelectedGroup('todos');
+                      setSelectedCategory('todos');
+                      setSearchQuery('');
+                    }}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-mono-code font-semibold bg-[#2b1717] text-[#ff9999] border border-[#522323] hover:bg-[#3d1e1e] hover:text-white transition-all cursor-pointer"
+                    title="Restablecer filtros y búsqueda"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>Restablecer</span>
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Large Interactive Search Input */}
+            <div className="relative">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#717d93] pointer-events-none flex items-center">
+                <Search className="w-5 h-5 text-[#9fcaff]" />
+              </div>
+              <input
+                id="catalog-realtime-search-top"
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Escribe el nombre o referencia del equipo (ej: Molino, Embutidora, MC-TK08, ALG-CART, Waflera, Licuadora, Crepera, Empacadora...)"
+                className="w-full bg-[#080c13] border-2 border-[#2b394e] text-white text-sm md:text-base placeholder-[#68768e] rounded-xl pl-12 pr-12 py-3.5 font-body focus:outline-none focus:border-[#9fcaff] focus:ring-2 focus:ring-[#9fcaff]/30 transition-all shadow-inner"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#717d93] hover:text-white p-1.5 rounded-lg hover:bg-[#253247] transition-colors cursor-pointer"
+                  title="Borrar término de búsqueda"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Quick search tags / filters */}
+            <div className="flex items-center flex-wrap gap-1.5 pt-1">
+              <span className="text-[11px] font-mono-code text-[#717d93] mr-1">
+                Búsquedas frecuentes:
+              </span>
+              {[
+                'Molino',
+                'Embutidora',
+                'Batidora',
+                'Crispetera',
+                'Algodonera',
+                'Licuadora',
+                'Waflera',
+                'Crepera',
+                'Empacadora',
+                'Mojadora',
+                'Exprimidor',
+                'Corte Láser'
+              ].map((term) => {
+                const isActive = searchQuery.toLowerCase().trim() === term.toLowerCase();
+                return (
+                  <button
+                    key={term}
+                    type="button"
+                    onClick={() => {
+                      if (isActive) {
+                        setSearchQuery('');
+                      } else {
+                        setSearchQuery(term);
+                      }
+                    }}
+                    className={`px-2.5 py-1 rounded-lg text-xs font-mono-code transition-all cursor-pointer ${
+                      isActive
+                        ? 'bg-[#9fcaff] text-[#0d1117] font-bold shadow-sm ring-1 ring-[#9fcaff]'
+                        : 'bg-[#18202d] text-[#8e9ab0] hover:text-white hover:bg-[#222d3e] border border-[#273447]'
+                    }`}
+                  >
+                    {term}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* =========================================================================
             PASO 1: MACRO CATEGORY SELECTION (Spacious, prominent 4-card selector)
            ========================================================================= */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-3 px-1">
             <span className="text-xs font-mono-code uppercase tracking-wider text-[#9fcaff] font-bold flex items-center gap-2">
               <Filter className="w-3.5 h-3.5" />
-              <span>1. Categoría Principal</span>
+              <span>1. Filtrar por Categoría Principal</span>
             </span>
             <span className="text-xs font-mono-code text-[#717d93]">
               {products.length} equipos registrados
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 p-2.5 bg-[#131924] border border-[#222c3c] rounded-2xl shadow-inner">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4 p-2.5 bg-[#131924] border border-[#222c3c] rounded-2xl shadow-inner">
             {mainGroups.map((group) => {
               const Icon = group.icon;
               const isActive = selectedGroup === group.id;
@@ -272,39 +412,29 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
         </div>
 
         {/* =========================================================================
-            PASO 2: SEARCH & SUBCATEGORY NAVIGATION PANEL (Spacious & Scrollable)
+            PASO 2: SUBCATEGORY NAVIGATION PANEL (Spacious & Interactive)
            ========================================================================= */}
-        <div className="mb-8 p-4 md:p-6 bg-[#131924] border border-[#222c3c] rounded-2xl space-y-6 shadow-xl">
+        <div className="mb-8 p-4 md:p-6 bg-[#131924] border border-[#222c3c] rounded-2xl space-y-4 shadow-xl">
           
-          {/* Top Control Bar: Search Input + Clear Filters */}
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between pb-4 border-b border-[#222c3c]">
-            {/* Search Input Box */}
-            <div className="relative w-full md:w-96">
-              <Search className="w-4 h-4 text-[#717d93] absolute left-3.5 top-1/2 transform -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Buscar por modelo, nombre o capacidad..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#1a2332] border border-[#2c384c] text-white text-sm placeholder-[#717d93] rounded-xl pl-10 pr-10 py-2.5 font-body focus:outline-none focus:border-[#9fcaff] focus:ring-1 focus:ring-[#9fcaff] transition-all shadow-inner"
-              />
+          {/* Subcategories Header Bar */}
+          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between pb-3 border-b border-[#222c3c]">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-mono-code uppercase tracking-wider text-[#9fcaff] font-bold flex items-center gap-2">
+                <span>2. Subcategorías Disponibles ({availableCategories.length - 1}):</span>
+              </span>
               {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#717d93] hover:text-white p-1 rounded-full hover:bg-[#253247] cursor-pointer"
-                  title="Limpiar búsqueda"
-                >
-                  <X className="w-4 h-4" />
-                </button>
+                <span className="text-xs font-mono-code px-2 py-0.5 rounded bg-[#1a2536] text-[#9fcaff] border border-[#2c3d56]">
+                  Filtro activo: "{searchQuery}"
+                </span>
               )}
             </div>
 
             {/* Status & Global Clear Button */}
-            <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+            <div className="flex items-center gap-3">
               <span className="text-xs font-mono-code text-[#9ea7b8] flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse"></span>
                 <span>
-                  Encontrados: <strong className="text-white text-sm">{filteredProducts.length}</strong> de {products.length}
+                  Mostrando <strong className="text-white text-sm">{filteredProducts.length}</strong> de {products.length}
                 </span>
               </span>
 
@@ -316,6 +446,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
                     setSearchQuery(''); 
                   }}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono-code font-semibold bg-[#2b1717] text-[#ff9999] border border-[#522323] hover:bg-[#3d1e1e] hover:text-white transition-all cursor-pointer"
+                  title="Restablecer todos los filtros"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>Limpiar Filtros</span>
@@ -324,8 +455,8 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
             </div>
           </div>
 
-          {/* Subcategories Section (if in 'todos' or 'alimentos') */}
-          {(selectedGroup === 'todos' || selectedGroup === 'alimentos') ? (
+          {/* Subcategories Section (if in 'todos', 'alimentos' or 'empaque') */}
+          {(selectedGroup === 'todos' || selectedGroup === 'alimentos' || selectedGroup === 'empaque') ? (
             <div>
               <div className="flex items-center justify-between mb-3">
                 <span className="text-xs font-mono-code uppercase tracking-wider text-[#717d93] font-bold flex items-center gap-2">
