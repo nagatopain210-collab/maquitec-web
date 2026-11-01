@@ -302,21 +302,36 @@ export const processingAndPeelersProducts: Product[] = [
   {
     id: 'peladora-mango',
     ref: 'PL-MNG',
-    name: 'Peladora de Mango Industrial',
+    name: 'Peladora de Mango Industrial Manual',
     category: 'procesamiento_frutas',
     group: 'alimentos',
     categoryLabel: 'Procesamiento, Peladoras & Cortadores',
     image: '/peladora-mango.jpg',
-    shortDesc: 'Pelado neumático-mecánico de mango sin maltratar la pulpa.',
-    fullDesc: 'Peladora industrial de frutas como mango y papaya de forma irregular mediante cuchilla de copiado térmico.',
-    power: '0.75 HP + Neumático',
-    capacity: '300 - 500 frutos/hora',
-    material: 'Acero Inoxidable 304',
-    voltage: '110V / 220V',
-    dimensions: '600 x 450 x 950 mm',
-    weight: '55 kg',
-    specs: [{ label: 'Frutas', value: 'Mango, Papaya, Manzana' }],
-    highlights: ['Espesor de pelado regulable', 'Aumento del rendimiento de pulpa hasta en un 15%']
+    badge: '100% Manual',
+    shortDesc: 'Peladora manual ergonómica para mango y frutas, sin motor ni conexión eléctrica.',
+    fullDesc: 'Peladora industrial de operación 100% manual diseñada para mango y frutas de forma irregular. Su mecanismo ergonómico de copiado anatómico con cuchilla oscilante garantiza un corte uniforme sin maltratar la pulpa ni desperdiciar fruta, con cero consumo eléctrico y sin necesidad de motor.',
+    power: 'Manual (Sin Motor)',
+    capacity: '300 - 500 frutos/hora (según operario)',
+    material: 'Acero Inoxidable 304 Grado Alimenticio',
+    voltage: 'N/A (Operación Manual)',
+    dimensions: '480 x 360 x 680 mm',
+    weight: '16 kg',
+    specs: [
+      { label: 'Tipo de Accionamiento', value: '100% Manual Mecánico (Sin motor)' },
+      { label: 'Energía / Voltaje', value: 'No requiere energía eléctrica' },
+      { label: 'Frutas Compatibles', value: 'Mango (Tommy, Keitt, Criollo, Kent), Papaya, Manzana' },
+      { label: 'Capacidad de Procesamiento', value: '300 - 500 frutos por hora' },
+      { label: 'Material de Fabricación', value: 'Acero Inoxidable AISI 304 Grado Alimenticio' },
+      { label: 'Sistema de Pelado', value: 'Cuchilla de copiado anatómico con espesor regulable' },
+      { label: 'Rendimiento de Pulpa', value: 'Aumento de hasta 15% de aprovechamiento de pulpa' },
+      { label: 'Mantenimiento e Inocuidad', value: 'Lavado fácil y cuchillas reemplazables' }
+    ],
+    highlights: [
+      'Accionamiento 100% manual: sin motor, cero consumo eléctrico y máxima portabilidad',
+      'Cuchilla de copiado ergonómico que respeta la forma del mango sin dañar la pulpa',
+      'Espesor de pelado regulable según madurez y calibre de la fruta',
+      'Fabricada íntegramente en Acero Inoxidable 304 grado alimenticio'
+    ]
   },
   {
     id: 'molino-martillos',

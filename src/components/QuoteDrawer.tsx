@@ -79,23 +79,27 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
   onClearCart,
   laserDetailNote
 }) => {
-  if (!isOpen) return null;
-
   const [clientName, setClientName] = useState('');
   const [clientPhone, setClientPhone] = useState('');
   const [clientCity, setClientCity] = useState('');
   const [clientComments, setClientComments] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
+  if (!isOpen) return null;
+
   const handleSendWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
     if (!clientName || !clientPhone) return;
 
     let itemsText = items
-      .map(
-        (i) =>
-          `• ${i.product.name} (REF: ${i.product.ref}) x${i.quantity} [Voltaje: ${i.voltage}]`
-      )
+      .map((i) => {
+        const isItemManual =
+          i.voltage?.toLowerCase().includes('manual') ||
+          i.product.power?.toLowerCase().includes('manual') ||
+          i.product.voltage?.toLowerCase() === 'n/a';
+        const specLabel = isItemManual ? '[Operación: Manual (Sin motor)]' : `[Voltaje: ${i.voltage}]`;
+        return `• ${i.product.name} (REF: ${i.product.ref}) x${i.quantity} ${specLabel}`;
+      })
       .join('\n');
 
     if (laserDetailNote) {
@@ -188,7 +192,9 @@ export const QuoteDrawer: React.FC<QuoteDrawerProps> = ({
                           {item.product.name}
                         </h5>
                         <p className="font-mono-code text-[11px] text-[#414750]">
-                          Voltaje: {item.voltage}
+                          {item.voltage?.toLowerCase().includes('manual') || item.product.power?.toLowerCase().includes('manual')
+                            ? 'Operación: Manual (Sin motor)'
+                            : `Voltaje: ${item.voltage}`}
                         </p>
                         <span className="font-mono-code text-[11px] text-[#0061a4] font-semibold block">
                           Cotizar precio por WhatsApp

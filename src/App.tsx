@@ -26,7 +26,12 @@ export default function App() {
 
   // Add product to quote cart
   const handleAddToCart = (product: Product, voltagePref?: string) => {
-    const voltage = voltagePref || (product.voltage.includes('110V') ? '110V' : '220V');
+    const isManual = 
+      product.power?.toLowerCase().includes('manual') || 
+      product.voltage?.toLowerCase().includes('manual') || 
+      product.voltage?.toLowerCase() === 'n/a';
+    const defaultVoltage = isManual ? 'Manual' : (product.voltage.includes('110V') ? '110V' : '220V');
+    const voltage = voltagePref || defaultVoltage;
 
     setCartItems((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
@@ -134,33 +139,39 @@ export default function App() {
       <WhatsAppButton />
 
       {/* Modals & Drawers */}
-      <TechnicalSheetModal
-        product={selectedProduct}
-        onClose={() => setSelectedProduct(null)}
-        onAddToCart={(prod, v) => handleAddToCart(prod, v)}
-        isInCart={selectedProduct ? cartProductIds.includes(selectedProduct.id) : false}
-      />
+      {selectedProduct && (
+        <TechnicalSheetModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={(prod, v) => handleAddToCart(prod, v)}
+          isInCart={cartProductIds.includes(selectedProduct.id)}
+        />
+      )}
 
-      <AiEquipmentAdvisorModal
-        isOpen={isAdvisorOpen}
-        onClose={() => setIsAdvisorOpen(false)}
-        products={PRODUCTS}
-        onAddToCart={(prod) => handleAddToCart(prod)}
-        onSelectProduct={(prod) => setSelectedProduct(prod)}
-      />
+      {isAdvisorOpen && (
+        <AiEquipmentAdvisorModal
+          isOpen={isAdvisorOpen}
+          onClose={() => setIsAdvisorOpen(false)}
+          products={PRODUCTS}
+          onAddToCart={(prod) => handleAddToCart(prod)}
+          onSelectProduct={(prod) => setSelectedProduct(prod)}
+        />
+      )}
 
-      <QuoteDrawer
-        isOpen={isQuoteDrawerOpen}
-        onClose={() => setIsQuoteDrawerOpen(false)}
-        items={cartItems}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemoveItem={handleRemoveItem}
-        onClearCart={() => {
-          setCartItems([]);
-          setLaserDetailNote(undefined);
-        }}
-        laserDetailNote={laserDetailNote}
-      />
+      {isQuoteDrawerOpen && (
+        <QuoteDrawer
+          isOpen={isQuoteDrawerOpen}
+          onClose={() => setIsQuoteDrawerOpen(false)}
+          items={cartItems}
+          onUpdateQuantity={handleUpdateQuantity}
+          onRemoveItem={handleRemoveItem}
+          onClearCart={() => {
+            setCartItems([]);
+            setLaserDetailNote(undefined);
+          }}
+          laserDetailNote={laserDetailNote}
+        />
+      )}
     </div>
   );
 }

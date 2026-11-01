@@ -669,7 +669,9 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
                       {/* Specs pills */}
                       <div className="grid grid-cols-2 gap-2 mb-3 sm:mb-4 bg-[#0d1117] p-2.5 sm:p-3 rounded-xl border border-[#212836]">
                         <div>
-                          <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase mb-0.5">Potencia</span>
+                          <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase mb-0.5">
+                            {product.power.toLowerCase().includes('manual') ? 'Operación' : 'Potencia'}
+                          </span>
                           <span className="font-body text-xs font-semibold text-white block leading-snug truncate">{product.power}</span>
                         </div>
                         <div>
@@ -795,7 +797,9 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
                         {/* Specs pills */}
                         <div className="grid grid-cols-2 gap-2 mb-3 sm:mb-4 bg-[#0d1117] p-2.5 sm:p-3 rounded-xl border border-[#212836]">
                           <div>
-                            <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase mb-0.5">Potencia</span>
+                            <span className="block text-[10px] font-mono-code text-[#7c889e] uppercase mb-0.5">
+                              {product.power.toLowerCase().includes('manual') ? 'Operación' : 'Potencia'}
+                            </span>
                             <span className="font-body text-xs font-semibold text-white block leading-snug truncate">{product.power}</span>
                           </div>
                           <div>

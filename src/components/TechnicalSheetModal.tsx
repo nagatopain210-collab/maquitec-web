@@ -15,24 +15,33 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
   onAddToCart,
   isInCart
 }) => {
-  if (!product) return null;
-
-  const isOnly110V = product.category === 'molinos' || !product.voltage.toLowerCase().includes('220v');
   const [selectedVoltage, setSelectedVoltage] = useState('110V');
   const [addedNotice, setAddedNotice] = useState(false);
   const [imgError, setImgError] = useState(false);
 
   React.useEffect(() => {
     setImgError(false);
-  }, [product.id, product.image]);
+  }, [product?.id, product?.image]);
+
+  if (!product) return null;
+
+  const isManual = 
+    product.power.toLowerCase().includes('manual') ||
+    product.voltage.toLowerCase().includes('n/a') ||
+    product.voltage.toLowerCase().includes('manual') ||
+    product.voltage.toLowerCase().includes('no requiere');
+
+  const isOnly110V = !isManual && (product.category === 'molinos' || !product.voltage.toLowerCase().includes('220v'));
 
   const handleAdd = () => {
-    onAddToCart(product, selectedVoltage);
+    onAddToCart(product, isManual ? 'Manual' : selectedVoltage);
     setAddedNotice(true);
     setTimeout(() => setAddedNotice(false), 2000);
   };
 
-  const whatsappMessage = `Hola Maquitec Ingeniería, requiero cotización y asesoría técnica para el equipo *${product.name} (REF: ${product.ref})* en voltaje ${selectedVoltage}.`;
+  const whatsappMessage = isManual
+    ? `Hola Maquitec Ingeniería, requiero cotización y asesoría técnica para el equipo *${product.name} (REF: ${product.ref})* en versión de Operación Manual (sin motor).`
+    : `Hola Maquitec Ingeniería, requiero cotización y asesoría técnica para el equipo *${product.name} (REF: ${product.ref})* en voltaje ${selectedVoltage}.`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in overflow-y-auto">
@@ -162,12 +171,26 @@ export const TechnicalSheetModal: React.FC<TechnicalSheetModalProps> = ({
                 </a>
               </div>
 
-              {/* Voltage Display / Selector */}
+              {/* Voltage or Manual Operation Display / Selector */}
               <div>
                 <label className="block font-mono-code text-xs font-semibold text-[#1a1c1e] mb-1.5 uppercase">
-                  Voltaje de Operación:
+                  {isManual ? 'Tipo de Accionamiento:' : 'Voltaje de Operación:'}
                 </label>
-                {isOnly110V ? (
+                {isManual ? (
+                  <div className="bg-[#f0fdf4] border border-[#86efac] p-3 rounded-md flex items-center justify-between gap-2 shadow-xs">
+                    <div>
+                      <span className="font-mono-code text-xs font-bold text-[#166534] uppercase block">
+                        Operación 100% Manual (Sin Motor)
+                      </span>
+                      <span className="font-body text-xs text-[#15803d]">
+                        No requiere energía eléctrica ni motor. Cero consumo y máxima inocuidad.
+                      </span>
+                    </div>
+                    <span className="bg-[#16a34a] text-white font-mono-code text-[10px] px-2.5 py-1 rounded font-extrabold uppercase shrink-0">
+                      Manual
+                    </span>
+                  </div>
+                ) : isOnly110V ? (
                   <div className="bg-[#f0f4f9] border border-[#0061a4]/30 px-3 py-2 rounded-md flex items-center justify-between">
                     <span className="font-mono-code text-xs font-bold text-[#0061a4] uppercase">
                       110V Monofásico (Estándar)

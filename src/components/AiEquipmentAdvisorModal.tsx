@@ -17,14 +17,14 @@ export const AiEquipmentAdvisorModal: React.FC<AiEquipmentAdvisorModalProps> = (
   onAddToCart,
   onSelectProduct
 }) => {
-  if (!isOpen) return null;
-
   const [businessType, setBusinessType] = useState('restaurante');
   const [dailyVolume, setDailyVolume] = useState('medio');
   const [primaryGoal, setPrimaryGoal] = useState('velocidad');
   const [customText, setCustomText] = useState('');
   const [recommendations, setRecommendations] = useState<Product[] | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
+
+  if (!isOpen) return null;
 
   const handleAnalyze = (e: React.FormEvent) => {
     e.preventDefault();
